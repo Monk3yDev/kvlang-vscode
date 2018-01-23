@@ -1,0 +1,79 @@
+{
+    "Bubble": {
+        "prefix": "Bubble",
+        "body": [
+            "Bubble${1:}",
+            "\t${2:}"
+        ]
+    },
+    "BubbleButton": {
+        "prefix": "BubbleButton",
+        "body": [
+            "BubbleButton${1:}",
+            "\t${2:}"
+        ]
+    },
+    "DropDown": {
+        "prefix": "DropDown",
+        "body": [
+            "DropDown${1:}",
+            "\t${2:}"
+        ]
+    },
+    "FileChooserListView": {
+        "prefix": "FileChooserListView",
+        "body": [
+            "FileChooserListView${1:}",
+            "\t${2:}"
+        ]
+    },
+    "FileChooserIconView": {
+        "prefix": "FileChooserIconView",
+        "body": [
+            "FileChooserIconView${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Popup": {
+        "prefix": "Popup",
+        "body": [
+            "Popup${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Spinner": {
+        "prefix": "Spinner",
+        "body": [
+            "Spinner${1:}",
+            "\t${2:}"
+        ]
+    },
+    "ListView": {
+        "prefix": "ListView",
+        "body": [
+            "ListView${1:}",
+            "\t${2:}"
+        ]
+    },
+    "TabbedPanel": {
+        "prefix": "TabbedPanel",
+        "body": [
+            "TabbedPanel${1:}",
+            "\t${2:}"
+        ]
+    },
+    "VideoPlayer": {
+        "prefix": "VideoPlayer",
+        "body": [
+            "VideoPlayer${1:}",
+            "\t${2:}"
+        ]
+    },
+    "VKeyboard": {
+        "prefix": "VKeyboard",
+        "body": [
+            "VKeyboard${1:}",
+            "\t${2:}"
+        ]
+    }
+}

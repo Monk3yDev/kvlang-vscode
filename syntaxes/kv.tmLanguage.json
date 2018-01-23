@@ -1,0 +1,150 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "KvLang",
+	"patterns": [
+		{
+			"name": "string.quoted.double.kv",
+			"begin": "\"",
+			"end": "\""
+		},
+		{
+			"name": "string.quoted.single.kv",
+			"begin": "'",
+			"end": "'"
+		},
+		{
+			"name": "comment.line.number-sign.kv",
+			"match": "#[^:].*"
+		},
+		{
+			"name": "keyword.control.kv",
+			"match": "#:"
+		},
+		{
+			"name": "keyword.control.kv",
+			"match": "\\b(if|for|return|import|else|elif|pass)\\b"
+		},
+		{
+			"name": "entity.name.tag.kv",
+			"match": "\\b(True|None|False|self|app|root|nonlocal|is|lambda|and|not|or|in)\\b"
+		},
+        {
+			"explanation": "A KvLang syntax of a rule definition",
+			"match": "\\B< *-*([A-Z][a-zA-Z0-9_]*)\\b>",
+			"captures": {
+                "1": {
+                    "name": "entity.name.class.kv"
+                }
+            }
+		},
+		{
+			"explanation": "Root widget inside Class rule",
+			"match": "\\B\\s([A-Z][a-zA-Z0-9_]*):[\\s]*\\s*",
+			"captures": {
+                "1": {
+                    "name": "entity.name.class.kv"
+                }
+            }
+		},	
+		{
+			"explanation": "Template  1.7.0: Template usage is now deprecated",
+			"match": "[\\[] *(([A-Z][a-zA-Z0-9_]*) *@ *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *[\\]]:)",
+			"captures": {
+                "2": {
+                    "name": "entity.name.class.kv"
+				},
+				"4": {
+                    "name": "entity.name.class.kv"
+				},
+				"6": {
+                    "name": "entity.name.class.kv"
+				},
+				"8": {
+                    "name": "entity.name.class.kv"
+				},
+				"10": {
+                    "name": "entity.name.class.kv"
+				},
+				"12": {
+                    "name": "entity.name.class.kv"
+				}
+            }
+		},
+		{
+			"explanation": "Dynamic class",
+			"match": "< *(([A-Z][a-zA-Z0-9_]*) *@ *)(([a-zA-Z_][a-zA-Z0-9_]*) *\\+* *)(([a-zA-Z_][a-zA-Z0-9_]*) *\\+* *)(([a-zA-Z_][a-zA-Z0-9_]*) *\\+* *)(([a-zA-Z_][a-zA-Z0-9_]*) *\\+* *)(([a-zA-Z_][a-zA-Z0-9_]*) *>:)",
+			"captures": {
+                "2": {
+                    "name": "entity.name.class.kv"
+				},
+				"4": {
+                    "name": "entity.name.class.kv"
+				},
+				"6": {
+                    "name": "entity.name.class.kv"
+				},
+				"8": {
+                    "name": "entity.name.class.kv"
+				},
+				"10": {
+                    "name": "entity.name.class.kv"
+				},
+				"12": {
+                    "name": "entity.name.class.kv"
+				}
+            }
+		},
+		{
+			"explanation": "Multiple rule definition",
+			"match": "< *(([A-Z][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)(([a-zA-Z_][a-zA-Z0-9_]*) *,* *)>:",
+			"captures": {
+                "2": {
+                    "name": "entity.name.class.kv"
+				},
+				"4": {
+                    "name": "entity.name.class.kv"
+				},
+				"6": {
+                    "name": "entity.name.class.kv"
+				},
+				"8": {
+                    "name": "entity.name.class.kv"
+				},
+				"10": {
+                    "name": "entity.name.class.kv"
+				},
+				"12": {
+                    "name": "entity.name.class.kv"
+				}
+            }
+		},
+		{
+			"explanation": "Syntax for creating a root widget outside Class rule",
+			"match": "(^[A-Z][a-zA-Z0-9_]*):[\\s]*\\n",
+			"captures": {
+                "1": {
+                    "name": "entity.name.class.kv"
+                }
+            }
+		},
+		{
+			"explanation": "Attribute names",
+			"match": "\\B\\s(-*[a-zA-Z_][a-zA-Z0-9_]*)\\b:",
+			"captures": {
+                "1": {
+                    "name": "entity.other.attribute-name.kv"
+                }
+            }
+		},	
+		{
+			"name": "constant.character.escape.kv",
+			"match": "\\\\"
+		},
+		{
+            "comment": "Numeric value",
+            "name": "constant.numeric.kv",
+            "match": "\\d"
+		}
+	],
+	"scopeName": "source.kv"
+}

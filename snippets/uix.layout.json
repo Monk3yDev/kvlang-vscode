@@ -1,0 +1,58 @@
+{
+    "AnchorLayout": {
+        "prefix": "AnchorLayout",
+        "body": [
+            "AnchorLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "BoxLayout": {
+        "prefix": "BoxLayout",
+        "body": [
+            "BoxLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "FloatLayout": {
+        "prefix": "FloatLayout",
+        "body": [
+            "FloatLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "GridLayout,": {
+        "prefix": "GridLayout",
+        "body": [
+            "GridLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "PageLayout": {
+        "prefix": "PageLayout",
+        "body": [
+            "PageLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "RelativeLayout": {
+        "prefix": "RelativeLayout",
+        "body": [
+            "RelativeLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "ScatterLayout": {
+        "prefix": "ScatterLayout",
+        "body": [
+            "ScatterLayout${1:}",
+            "\t${2:}"
+        ]
+    },
+    "StackLayout": {
+        "prefix": "StackLayout",
+        "body": [
+            "StackLayout${1:}",
+            "\t${2:}"
+        ]
+    }
+}

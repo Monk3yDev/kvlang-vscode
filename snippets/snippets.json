@@ -1,0 +1,103 @@
+{
+    "classmultiple": {
+        "prefix": "kvclassm",
+        "body": [
+            "<${1:TemplateName}@${2:BaseClass1}+${3:BaseClass2}>:",
+            "    ${4:}"
+        ],
+        "description": "Code snippet for an multiple inheritance dynamic class."
+    },
+    "class": {
+        "prefix": "kvclass",
+        "body": [
+            "<${1:NewWidget}@${2:BaseClass1}>:",
+            "    ${3:}"
+        ],
+        "description": "Code snippet for an simple inheritance dynamic class."
+    },
+    "rule": {
+        "prefix": "kvrule",
+        "body": [
+            "<${1:Rule}>:",
+            "    ${2:}"
+        ],
+        "description": "Code snippet for a rule definition."
+    },
+    "servalrules": {
+        "prefix": "kvrules",
+        "body": [
+            "<${1:Rul1},${2:Rule2}>:",
+            "    ${3:}"
+        ],
+        "description": "Code snippet for a rule definition with serval definitions."
+    },
+    "import": {
+        "prefix": "kvimport",
+        "body": [
+            "#: ${1:<alias>} ${2:<package>}"
+        ],
+        "description": "Code snippet for a import module or class as specific name: #: import isdir os.path.isdir."
+    },
+    "set": {
+        "prefix": "kvset",
+        "body": [
+            "#: set ${1:<key>} ${2:<expr>}"
+        ],
+        "description": "Code snippet for a Set a key that will be available anywhere in the kv."
+    },
+    "include": {
+        "prefix": "kvinclude",
+        "body": [
+            "#: include ${1:<file>}"
+        ],
+        "description": "Code snippet for a include an external kivy file."
+    },
+    "includeforce": {
+        "prefix": "kvincludef",
+        "body": [
+            "#: include force ${1:<file>}"
+        ],
+        "description": "Code snippet for a include an external kivy file. Include is forced."
+    },
+    "ifexp": {
+        "prefix": "kvifexp",
+        "body": [
+            "${1:resultOnTrue} if ${2:condition} else ${3:resultOnFalse}"
+        ],
+        "description": "Code snippet for a if expression in single line."
+    },
+    "if": {
+        "prefix": "kvif",
+        "body": [
+            "if ${1:condition}: ${2:pass}"
+        ],
+        "description": "Code snippet for a if expression."
+    },
+    "for": {
+        "prefix": "kvfor",
+        "body": [
+            "for ${1:target} in ${2:iter}: ${3:pass}"
+        ],
+        "description": "Code snippet for a for loop"
+    }
+    ,
+    "if/else": {
+        "prefix": "kvifelse",
+        "body": [
+            "if ${1:condition}: ${2:pass}\\",
+            "else: ${3:pass}"
+        ],
+        "description": "Code snippet for a if/else expression in new lines."
+    },
+    "if/elif": {
+        "prefix": "kvifelif",
+        "body": [
+            "if ${1:condition}:\\",
+            "${2:pass}",
+            "elif ${3:condition}:\\",
+            "${4:pass}",
+            "else: ${5:pass}"
+        ],
+        "description": "Code snippet for a if/elif expression in new lines."
+    }
+}

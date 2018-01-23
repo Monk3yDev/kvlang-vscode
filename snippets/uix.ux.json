@@ -1,0 +1,72 @@
+{
+    "Label": {
+        "prefix": "Label",
+        "body": [
+            "Label${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Button": {
+        "prefix": "Button",
+        "body": [
+            "Button${1:}",
+            "\t${2:}"
+        ]
+    },
+    "CheckBox": {
+        "prefix": "CheckBox",
+        "body": [
+            "CheckBox${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Image,": {
+        "prefix": "Image",
+        "body": [
+            "Image${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Slider": {
+        "prefix": "Slider",
+        "body": [
+            "Slider${1:}",
+            "\t${2:}"
+        ]
+    },
+    "ProgressBar": {
+        "prefix": "ProgressBar",
+        "body": [
+            "ProgressBar${1:}",
+            "\t${2:}"
+        ]
+    },
+    "TextInput": {
+        "prefix": "TextInput",
+        "body": [
+            "TextInput${1:}",
+            "\t${2:}"
+        ]
+    },
+    "ToggleButton": {
+        "prefix": "ToggleButton",
+        "body": [
+            "ToggleButton${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Switch": {
+        "prefix": "Switch",
+        "body": [
+            "Switch${1:}",
+            "\t${2:}"
+        ]
+    },
+    "Video": {
+        "prefix": "Video",
+        "body": [
+            "Video${1:}",
+            "\t${2:}"
+        ]
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "name": "kvlang",
+    "displayName": "KvLang",
+    "description": "Support for the KvLang language of Kivy: Cross-platform Python Framework for NUI Development",
+    "version": "0.0.1",
+    "publisher": "Monk3yDev",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "repository": {
+		"type": "git",
+		"url": "https://github.com/Monk3yDev/kvlang-vscode"
+	},
+	"bugs": {
+		"url": "https://github.com/Monk3yDev/kvlang-vscode/issues"
+    },
+    "icon": "icon.png",
+    "keywords": [
+		"python",
+        "kivy",
+        "kvlang",
+        "kv"
+	],
+    "categories": [
+        "Languages",
+        "Snippets",
+        "Other"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "kv",
+            "aliases": ["KvLang", "kv"],
+            "extensions": [".kv"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "kv",
+            "scopeName": "source.kv",
+            "path": "./syntaxes/kv.tmLanguage.json"
+        }],
+        "snippets": [
+            {
+                "language": "kv",
+                "path": "./snippets/snippets.json"
+            },
+            {
+                "language": "kv",
+                "path": "./snippets/uix.layout.json"
+            },
+            {
+                "language": "kv",
+                "path": "./snippets/uix.ux.json"
+            },
+            {
+                "language": "kv",
+                "path": "./snippets/uix.complex.ux.json"
+            }
+        ]
+    }
+}

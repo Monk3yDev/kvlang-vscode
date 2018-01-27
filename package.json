@@ -4,40 +4,73 @@
     "description": "Support for the KvLang language of Kivy: Cross-platform Python Framework for NUI Development",
     "version": "0.0.1",
     "publisher": "Monk3yDev",
+    "license": "MIT",
     "engines": {
         "vscode": "^1.19.0"
     },
     "repository": {
-		"type": "git",
-		"url": "https://github.com/Monk3yDev/kvlang-vscode"
-	},
-	"bugs": {
-		"url": "https://github.com/Monk3yDev/kvlang-vscode/issues"
+        "type": "git",
+        "url": "https://github.com/Monk3yDev/kvlang-vscode"
+    },
+    "bugs": {
+        "url": "https://github.com/Monk3yDev/kvlang-vscode/issues"
     },
     "icon": "icon.png",
     "keywords": [
-		"python",
+        "python",
         "kivy",
         "kvlang",
         "kv"
-	],
+    ],
     "categories": [
         "Languages",
         "Snippets",
         "Other"
     ],
     "contributes": {
-        "languages": [{
-            "id": "kv",
-            "aliases": ["KvLang", "kv"],
-            "extensions": [".kv"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "kv",
-            "scopeName": "source.kv",
-            "path": "./syntaxes/kv.tmLanguage.json"
-        }],
+        "configuration": {
+            "type": "object",
+            "title": "Kvls configuration",
+            "properties": {
+                "kvls.maxNumberOfProblems": {
+                    "scope": "resource",
+                    "type": "number",
+                    "default": 100,
+                    "description": "Controls the maximum number of problems produced by the server."
+                },
+                "kvls.trace.server": {
+                    "scope": "window",
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "messages",
+                        "verbose"
+                    ],
+                    "default": "off",
+                    "description": "Traces the communication between VSCode and the language server."
+                }
+            }
+        },
+        "languages": [
+            {
+                "id": "kv",
+                "aliases": [
+                    "KvLang",
+                    "kv"
+                ],
+                "extensions": [
+                    ".kv"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "kv",
+                "scopeName": "source.kv",
+                "path": "./syntaxes/kv.tmLanguage.json"
+            }
+        ],
         "snippets": [
             {
                 "language": "kv",
@@ -56,5 +89,22 @@
                 "path": "./snippets/uix.complex.ux.json"
             }
         ]
+    },
+    "activationEvents": [
+        "onLanguage:kv"
+    ],
+    "main": "./client/out/src/extension",
+    "scripts": {
+        "postinstall": "cd server && npm install && cd ../client && npm install && cd ..",
+        "compile": "tsc -p client/tsconfig.json && cd server && npm run installServer && cd .. && tsc -p server/tsconfig.json",
+        "vscode:prepackage": "tsc -p src/client/tsconfig.json && cd src/server && npm run installServer && cd ../.. && tsc -p src/server/tsconfig.json",
+        "compile:client": "tsc -p client/tsconfig.json",
+        "watch:client": "tsc -w -p client/tsconfig.json",
+        "compile:server": "cd server && npm run installServer && cd .. && tsc -p server/tsconfig.json",
+        "watch:server": "cd server && npm run installServer && cd .. && tsc -w -p server/tsconfig.json"
+    },
+    "devDependencies": {
+        "@types/node": "^6.0.88",
+        "typescript": "^2.5.2"
     }
 }

@@ -1,5 +1,23 @@
 {
     "cSpell.words": [
         "kvlang"
+    ],
+    "cSpell.enabledLanguageIds": [
+        "c",
+        "cpp",
+        "csharp",
+        "go",
+        "handlebars",
+        "javascript",
+        "javascriptreact",
+        "latex",
+        "markdown",
+        "php",
+        "python",
+        "restructuredtext",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yml"
     ]
 }

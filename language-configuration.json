@@ -24,12 +24,5 @@
         ["(", ")"],
         ["\"", "\""],
         ["'", "'"]
-    ],
-    "iconThemes": [
-        {
-            "id": "turtles",
-            "label": "Turtles",
-            "path": "./fileicons/turtles-icon-theme.json"
-        }
     ]
 }

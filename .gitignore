@@ -1,3 +1,23 @@
 node_modules
 .vsix
 vsc-extension-quickstart.md
+
+# Tests and coverage
+.coverage
+.noseids
+cover/**
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# npm install
+node_modules/**
+client/node_modules/**
+client/out/**
+
+# package
+*.vsix

@@ -34,7 +34,7 @@
     "import": {
         "prefix": "kvimport",
         "body": [
-            "#: ${1:<alias>} ${2:<package>}"
+            "#:import ${1:<alias>} ${2:<package>}"
         ],
         "description": "Code snippet for a import module or class as specific name: #: import isdir os.path.isdir."
     },
@@ -48,14 +48,14 @@
     "include": {
         "prefix": "kvinclude",
         "body": [
-            "#: include ${1:<file>}"
+            "#:include ${1:<file>}"
         ],
         "description": "Code snippet for a include an external kivy file."
     },
     "includeforce": {
         "prefix": "kvincludef",
         "body": [
-            "#: include force ${1:<file>}"
+            "#:include force ${1:<file>}"
         ],
         "description": "Code snippet for a include an external kivy file. Include is forced."
     },

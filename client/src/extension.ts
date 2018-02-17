@@ -1,45 +1,31 @@
 /* --------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
- * Edited extension is done by Monk3yDev.
  * ------------------------------------------------------------------------------------------ */
 'use strict';
-
 import * as path from 'path';
 
-import { workspace, ExtensionContext } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions, TransportKind } from 'vscode-languageclient';
+import { Disposable, ExtensionContext, workspace } from 'vscode';
+import { LanguageClient, LanguageClientOptions, ServerOptions} from 'vscode-languageclient';
+
+function startLangServer(command: string, serverModule: string[]): Disposable {
+
+	const serverOptions: ServerOptions = {
+		run : { command: command, args: serverModule },
+		debug: { command: command, args: serverModule }
+	};
+	const clientOptions: LanguageClientOptions = {
+		documentSelector: [{scheme: 'file', language: 'kv'}]
+	}
+	return new LanguageClient("kvls", "KvLang Server", serverOptions, clientOptions, false).start();
+}
 
 export function activate(context: ExtensionContext) {
-
-	// The server is implemented in node
-	let serverModule = context.asAbsolutePath(path.join('client', 'server', 'server.js'));
-	// The debug options for the server
-	let debugOptions = { execArgv: ["--nolazy", "--inspect=6009"] };
-	
-	// If the extension is launched in debug mode then the debug server options are used
-	// Otherwise the run options are used
-	let serverOptions: ServerOptions = {
-		run : { module: serverModule, transport: TransportKind.ipc },
-		debug: { module: serverModule, transport: TransportKind.ipc, options: debugOptions }
-	}
-	
-	// Options to control the language client
-	let clientOptions: LanguageClientOptions = {
-		// Register the server for plain text documents
-		documentSelector: [{scheme: 'file', language: 'kv'}],
-		synchronize: {
-			// Synchronize the setting section 'Kvlang Language Server' to the server
-			configurationSection: 'kvls',
-			// Notify the server about file changes to '.clientrc files contain in the workspace
-			fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
-		}
-	}
-	
-	// Create the language client and start the client.
-	let disposable = new LanguageClient('kvls', 'Kvlang Language Server', serverOptions, clientOptions).start();
-	
-	// Push the disposable to the context's subscriptions so that the 
-	// client can be deactivated on extension deactivation
+	// Get KvLang configuration
+	const configuration = workspace.getConfiguration();
+	// Read value from configuration parameter
+	const pythonCommand = configuration.get('kvlang.pythonCommand', "python");
+	let serverModule = context.asAbsolutePath(path.join('server', 'server.py'));
+	let disposable = startLangServer(pythonCommand, [serverModule]);
 	context.subscriptions.push(disposable);
 }

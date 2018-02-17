@@ -1,0 +1,7 @@
+Content-Length: 172
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc":"2.0","id":0,"result":{"capabilities":{"textDocumentSync":{"openClose":true,"change":0,"willSave":false,"willSaveWaitUntil":false,"save":{"includeText":true}}}}}Content-Length: 36
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc":"2.0","id":1,"result":{}}

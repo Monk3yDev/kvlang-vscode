@@ -1,27 +1,30 @@
 {
-	"name": "kvls",
-	"description": "Kvls language client. Implemented in lsp-sample and used within Kvls",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
-	"version": "0.0.1",
-	"publisher": "vscode",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
-	},
-	"engines": {
-		"vscode": "^1.19.0"
-	},
-	"scripts": {
-		"vscode:prepackage": "tsc -p ./",
-		"compile": "tsc -p ./",
-		"watch": "tsc -w -p ./",
-		"update-vscode": "node ./node_modules/vscode/bin/install",
-		"postinstall": "node ./node_modules/vscode/bin/install"
-	},
-	"dependencies": {
-		"ts-node": "^3.3.0",
-		"vscode": "^1.1.5",
-		"vscode-languageclient": "^3.4.2"
-	}
+    "name": "kvlang-language-sever",
+    "description": "VSCode extension for running kvlang language server",
+    "author": "Monk3yDev",
+    "license": "MIT",
+    "version": "0.0.2",
+    "publisher": "Monk3yDev",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Monk3yDev/kvlang-vscode"
+    },
+    "bugs": {
+        "url": "https://github.com/Monk3yDev/kvlang-vscode/issues"
+    },
+    "scripts": {},
+    "devDependencies": {
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5",
+        "@types/node": "^6.0.88"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^3.5.0",
+        "vscode-languageserver-protocol": "^3.5.0",
+        "vscode-languageserver-types": "^3.5.0",
+        "vscode-jsonrpc": "^3.5.0"
+    }
 }

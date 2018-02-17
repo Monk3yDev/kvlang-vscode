@@ -1,4 +1,19 @@
 .vscode/**
 .vscode-test/**
 .gitignore
+
 vsc-extension-quickstart.md
+
+# Tests and coverage
+.coverage
+.noseids
+cover/**
+# KvLang Language Server tests
+server/tests/**
+
+# Test files
+*.txt
+
+# Byte-compiled / optimized / DLL files
+server/kvls/__pycache__/**
+server/tests/__pycache__/**

@@ -2,7 +2,7 @@
     "name": "kvlang",
     "displayName": "KvLang",
     "description": "Support for the KvLang language of Kivy: Cross-platform Python Framework for NUI Development",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "Monk3yDev",
     "license": "MIT",
     "engines": {
@@ -30,24 +30,13 @@
     "contributes": {
         "configuration": {
             "type": "object",
-            "title": "Kvls configuration",
+            "title": "KvLang configuration",
             "properties": {
-                "kvls.maxNumberOfProblems": {
+                "kvlang.pythonCommand": {
                     "scope": "resource",
-                    "type": "number",
-                    "default": 100,
-                    "description": "Controls the maximum number of problems produced by the server."
-                },
-                "kvls.trace.server": {
-                    "scope": "window",
                     "type": "string",
-                    "enum": [
-                        "off",
-                        "messages",
-                        "verbose"
-                    ],
-                    "default": "off",
-                    "description": "Traces the communication between VSCode and the language server."
+                    "default": "python",
+                    "description": "Python command for running KvLang Language Server. Restart of the Visual Studio Code is needed."
                 }
             }
         },
@@ -95,16 +84,22 @@
     ],
     "main": "./client/out/src/extension",
     "scripts": {
-        "postinstall": "cd server && npm install && cd ../client && npm install && cd ..",
-        "compile": "tsc -p client/tsconfig.json && cd server && npm run installServer && cd .. && tsc -p server/tsconfig.json",
-        "vscode:prepackage": "tsc -p src/client/tsconfig.json && cd src/server && npm run installServer && cd ../.. && tsc -p src/server/tsconfig.json",
+        "postinstall": "cd client && npm install && node ./node_modules/vscode/bin/install && cd ..",
+        "compile": "tsc -p client/tsconfig.json",
+        "vscode:prepackage": "tsc -p client/tsconfig.json",
+        "vscode:prepublish": "tsc -p client/tsconfig.json",
         "compile:client": "tsc -p client/tsconfig.json",
-        "watch:client": "tsc -w -p client/tsconfig.json",
-        "compile:server": "cd server && npm run installServer && cd .. && tsc -p server/tsconfig.json",
-        "watch:server": "cd server && npm run installServer && cd .. && tsc -w -p server/tsconfig.json"
+        "watch:client": "tsc -w -p client/tsconfig.json"
     },
     "devDependencies": {
         "@types/node": "^6.0.88",
-        "typescript": "^2.5.2"
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^3.5.0",
+        "vscode-languageserver-protocol": "^3.5.0",
+        "vscode-languageserver-types": "^3.5.0",
+        "vscode-jsonrpc": "^3.5.0"
     }
 }

@@ -7,7 +7,7 @@ from kvls.kvlint import KvLint
 from kvls.logger import Logger
 
 # Disable logger in released code.
-Logger.DISABLED = True
+Logger.DISABLED = False
 
 class KvLangServer(object):
     """ Class responsible for managing Language Server Procedures """
@@ -83,51 +83,19 @@ class KvLangServer(object):
 
     def did_save(self, request):
         """ Handle DidSaveTextDocument Notification """
-        lint = KvLint()
-        result = lint.parser_exception(request.params()["text"])
-        if result is not None:
-            diagnostic = {'range': {'start': {'line': result.start['line'],
-                                              'character': result.start['character']},
-                                    'end': {'line': result.end['line'],
-                                            'character': result.end['character']}},
-                          'severity': result.severity,
-                          'code': result.code,
-                          'source': result.source,
-                          'message': result.message}
-            notification = NotificationMessage()
-            notification.content({'uri': request.params()["textDocument"]["uri"],
-                                  'diagnostics': [diagnostic]}, 'textDocument/publishDiagnostics')
-            self.send(notification)
-        else:
-            # Clear diagnostic
-            notification = NotificationMessage()
-            notification.content({'uri': request.params()["textDocument"]["uri"],
-                                  'diagnostics': []}, 'textDocument/publishDiagnostics')
-            self.send(notification)
+        diagnostic = KvLint.parser_exception(request.params()["text"])
+        notification = NotificationMessage()
+        notification.content({'uri': request.params()["textDocument"]["uri"],
+                              'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
+        self.send(notification)
 
     def did_open(self, request):
         """ Handle DidOpenTextDocumentParams Notification """
-        lint = KvLint()
-        result = lint.parser_exception(request.params()["textDocument"]["text"])
-        if result is not None:
-            diagnostic = {'range': {'start': {'line': result.start['line'],
-                                              'character': result.start['character']},
-                                    'end': {'line': result.end['line'],
-                                            'character': result.end['character']}},
-                          'severity': result.severity,
-                          'code': result.code,
-                          'source': result.source,
-                          'message': result.message}
-            notification = NotificationMessage()
-            notification.content({'uri': request.params()["textDocument"]["uri"],
-                                  'diagnostics': [diagnostic]}, 'textDocument/publishDiagnostics')
-            self.send(notification)
-        else:
-            # Clear diagnostic
-            notification = NotificationMessage()
-            notification.content({'uri': request.params()["textDocument"]["uri"],
-                                  'diagnostics': []}, 'textDocument/publishDiagnostics')
-            self.send(notification)
+        diagnostic = KvLint.parser_exception(request.params()["textDocument"]["text"])
+        notification = NotificationMessage()
+        notification.content({'uri': request.params()["textDocument"]["uri"],
+                              'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
+        self.send(notification)
 
     def did_close(self, request):
         """ Handle DidCloseTextDocumentParams Notification """

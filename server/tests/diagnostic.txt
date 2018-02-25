@@ -1,0 +1,24 @@
+Content-Length: 66
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}}
+Content-Length: 164
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "textDocument/didOpen", "params": {"textDocument": {"uri": "kivy.kv", "languageId": "kv", "version": 1, "text": "<AnchorLayout>: a"}}}
+Content-Length: 140
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "textDocument/didSave", "params": {"textDocument": {"uri": "kivy.kv", "version": 2}, "text": "<AnchorLayout"}}
+Content-Length: 102
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "textDocument/didClose", "params": {"textDocument": {"uri": "kivy.kv"}}}
+Content-Length: 66
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "id": 1, "method": "shutdown", "params": null}
+Content-Length: 53
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "exit", "params": null}

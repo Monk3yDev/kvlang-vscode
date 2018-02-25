@@ -20,50 +20,65 @@ class KvParser(Parser):
             when syntax is fine. Pure workaround."""
         pass
 
-
-class KvLintResult(object):
-    """ KvLint result object
-        start: Contains line and position of first character.
-        end: Contains line and position of last character.
-        severity: Severity of the lint result.
-        code: Diagnostic code.
-        source: What source performed linting. Default to 'kvlint'.
-        message: Kvlint message.
-    """
-    def __init__(self):
-        self.start = {'line': 0, 'character': 0}
-        self.end = {'line': 0, 'character': 0}
-        self.severity = 1
-        self.code = "KvLang100"
-        self.source = "kvlint"
-        self.message = ""
-
 class KvLint(object):
     """ Class responsible for linting KvLang. Current implementation
-        is simple using Parser from Kivy Project """
+        is simple using Parser from Kivy Project
+        ERROR: Reports an error.
+        WARNING: Reports a warning.
+        INFORMATION: Reports an information.
+        HINT: Reports a hint.
+        SOURCE: A human-readable string describing the source of diagnostic.
+        CODE: The diagnostic's code, which might appear in the user interface."""
+    ERROR = 1
+    WARNING = 2
+    INFORMATION = 3
+    HINT = 4
+
+    SOURCE = "kvlint"
+    CODE = "KvLang100"
+
     def __init__(self):
         pass
 
-    @staticmethod
-    def parser_exception(file_content):
-        """ Parse file content to catch ParserException
-            from Kivy parser. This data from exception
-            will be returned in KvLintResult object. If
-            parsing is success return will be None"""
-        parser_result = None
+    @classmethod
+    def parser_exception(cls, file_content):
+        """ Parse file content to catch ParserException from Kivy parser.
+            This data from exception will be returned as list of the diagnostic
+            elements stored in dictionary. Empty list is returned when there is
+            no linting problems.
+
+            KvLint diagnostic result dictionary contains
+                'range' Contains line and position of start and end character.
+                    'start'
+                        'line'
+                        'character'
+                    'end'
+                        'line'
+                        'character'
+                'severity' Severity of the lint result.
+                'code' Diagnostic code.
+                'source' What source performed linting. Default to 'kvlint'.
+                'message' Kvlint message. """
+        diagnostic = []
         try:
             KvParser(content=file_content)
-            parser_result = None
+            # Diagnostic are clear. List will not be updated
         except ParserException as result:
-            parser_result = KvLintResult()
-            parser_result.start['line'] = result.line
-            parser_result.end['line'] = result.line
-            parser_result.message = result.args[0].split('...')[2]
-            parser_result.severity = 1
+            diagnostic.append({'range': {'start': {'line': result.line,
+                                                   'character': 0},
+                                         'end': {'line': result.line,
+                                                 'character': 0}},
+                               'severity': cls.ERROR,
+                               'code': cls.CODE,
+                               'source': cls.SOURCE,
+                               'message': result.args[0].split('...')[2]})
         except SyntaxError as result:
-            parser_result = KvLintResult()
-            parser_result.start['line'] = result.lineno - 1
-            parser_result.end['line'] = result.lineno - 1
-            parser_result.message = str(result.args[0])
-            parser_result.severity = 1
-        return parser_result
+            diagnostic.append({'range': {'start': {'line': result.lineno - 1,
+                                                   'character': 0},
+                                         'end': {'line': result.lineno - 1,
+                                                 'character': 0}},
+                               'severity': cls.ERROR,
+                               'code': cls.CODE,
+                               'source': cls.SOURCE,
+                               'message': str(result.args[0])})
+        return diagnostic

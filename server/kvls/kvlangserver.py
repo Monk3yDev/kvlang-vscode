@@ -83,7 +83,8 @@ class KvLangServer(object):
 
     def did_save(self, request):
         """ Handle DidSaveTextDocument Notification """
-        diagnostic = KvLint.parser_exception(request.params()["text"])
+        kvlint = KvLint(request.params()["text"])
+        diagnostic = kvlint.parse()
         notification = NotificationMessage()
         notification.content({'uri': request.params()["textDocument"]["uri"],
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
@@ -91,7 +92,8 @@ class KvLangServer(object):
 
     def did_open(self, request):
         """ Handle DidOpenTextDocumentParams Notification """
-        diagnostic = KvLint.parser_exception(request.params()["textDocument"]["text"])
+        kvlint = KvLint(request.params()["textDocument"]["text"])
+        diagnostic = kvlint.parse()
         notification = NotificationMessage()
         notification.content({'uri': request.params()["textDocument"]["uri"],
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')

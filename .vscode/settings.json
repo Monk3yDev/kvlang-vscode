@@ -20,7 +20,7 @@
         "typescriptreact",
         "yml"
     ],
-    "python.pythonPath": "C:\\Users\\Monkey\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe",
+    "python.pythonPath": "C:\\Users\\Monkey\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
     "python.unitTest.unittestArgs": [
         "-v",
         "TESTS",
@@ -35,7 +35,8 @@
     "python.unitTest.nosetestArgs": [
         "server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"
     ],
-    "python.linting.pylintEnabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.mypyEnabled": true,
     "python.linting.enabled": true,
     "python.linting.mypyArgs": [
         "--ignore-missing-imports",

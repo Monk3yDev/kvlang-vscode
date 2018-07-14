@@ -27,6 +27,8 @@ class KvLangServer(object):
                            "textDocument/didSave": self.did_save,
                            "textDocument/didOpen": self.did_open,
                            "textDocument/didClose": self.did_close,
+                           "textDocument/completion": self.completion,
+                           "completionItem/resolve": self.resolve,
                            "shutdown": self.shutdown,
                            "exit": self.exit}
 
@@ -67,13 +69,14 @@ class KvLangServer(object):
                 self.handle(line_with_content)
 
     def initialize(self, request):
-        """ Handle Initialize Request"""
+        """ Handle Initialize Request """
         response = ResponseMessage()
         response.content({'capabilities': {'textDocumentSync': {'openClose': True,
                                                                 'change': 0,
                                                                 'willSave': False,
                                                                 'willSaveWaitUntil': False,
-                                                                'save': {'includeText': True}}
+                                                                'save': {'includeText': True}},
+                                           'completionProvider': {'resolveProvider': True}
                                           }}, True, request.request_id())
         self.send(response)
 
@@ -107,8 +110,22 @@ class KvLangServer(object):
                               'diagnostics': []}, 'textDocument/publishDiagnostics')
         self.send(notification)
 
+    def completion(self, request):
+        """ Handle CompletionParams Request """
+        # TODO Add full support for textDocument/completion with test
+        response = ResponseMessage()
+        response.content({'isIncomplete': False, 'items': []}, True, request.request_id())
+        self.send(response)
+
+    def resolve(self, request):
+        """ Handle CompletionItem Request """
+        # TODO Add full support for completionItem/resolve with test
+        response = ResponseMessage()
+        response.content({'isIncomplete': False, 'items': []}, True, request.request_id())
+        self.send(response)
+
     def default(self, request):
-        """ Handle unknown method which do not exist in procedures"""
+        """ Handle unknown method which do not exist in procedures """
         self.logger.log(Logger.INFO, "Server do not support request with method='{}'". \
                         format(request.method()))
         raise Exception("Server do not support request with method='{}'".format(request.method()))

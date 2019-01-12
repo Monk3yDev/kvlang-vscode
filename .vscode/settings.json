@@ -21,27 +21,12 @@
         "yml"
     ],
     "python.pythonPath": "C:\\Users\\Monkey\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
-    "python.unitTest.unittestArgs": [
-        "-v",
-        "TESTS",
-        "-s",
-        ".",
-        "-p",
-        "*_test.py"
-    ],
-    "python.unitTest.unittestEnabled": false,
-    "python.unitTest.pyTestEnabled": false,
     "python.unitTest.nosetestsEnabled": true,
     "python.unitTest.nosetestArgs": [
-        "server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"
+        "./server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"
     ],
-    "python.linting.pylintEnabled": false,
-    "python.linting.mypyEnabled": true,
+    "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent"
-    ],
     "python.linting.pylintArgs": [
         "--enable=F,E,C,W,R"
     ],

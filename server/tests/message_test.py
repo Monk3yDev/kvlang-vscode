@@ -1,4 +1,5 @@
 """ Unit tests for Message module """
+from __future__ import absolute_import
 import unittest
 from kvls.message import NotificationMessage, ResponseMessage, RequestMessage, ErrorCodes
 from kvls.utils import EOL, CHARSET

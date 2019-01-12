@@ -1,6 +1,11 @@
 """ Integration tests for KvLangServer """
+from __future__ import absolute_import
 import unittest
-from kvls.kvlangserver import KvLangServer
+import os
+# Disable UnitTest.
+os.environ["KIVY_UNITTEST"] = "0"
+from kvls.kvlangserver import KvLangServer # pylint: disable=C0413
+
 
 class ServerTest(unittest.TestCase):
     """ Server tests """

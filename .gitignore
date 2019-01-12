@@ -1,8 +1,6 @@
 node_modules
 .vsix
 vsc-extension-quickstart.md
-# MyPy
-.mypy_cache
 
 # Tests and coverage
 .coverage

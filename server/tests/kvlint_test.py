@@ -1,7 +1,12 @@
 """ Unit tests for KvLint module """
+from __future__ import absolute_import
 import unittest
-from kvls.kvlint import KvLint
-from kvls.utils import EOL
+import os
+# Disable UnitTest.
+os.environ["KIVY_UNITTEST"] = "0"
+from kvls.kvlint import KvLint # pylint: disable=C0413
+from kvls.utils import EOL # pylint: disable=C0413
+
 
 class KvLintTest(unittest.TestCase):
     """ Server tests """

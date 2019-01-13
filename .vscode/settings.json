@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
-        "kvlang"
+        "gmtime",
+        "kvlang",
+        "strftime"
     ],
     "cSpell.enabledLanguageIds": [
         "c",

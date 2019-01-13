@@ -2,17 +2,13 @@
 	"compilerOptions": {		
 		"target": "es6",
 		"module": "commonjs",
-		"moduleResolution": "node",
 		"rootDir": ".",
 		"outDir": "out",
-		"lib": [ "es2016" ],
-		"sourceMap": false,
-		"inlineSources": false,
-		"declaration": true,
-		"stripInternal": true,
+		"lib": [ "es6" ],
+		"sourceMap": true,
 	},
 	"exclude": [
 		"node_modules",
-		"server"
+		"server",
 	]
 }

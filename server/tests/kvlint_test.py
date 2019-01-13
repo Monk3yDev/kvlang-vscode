@@ -16,7 +16,7 @@ class KvLintTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_kvlint_parse_exception(self):
+    def test_parse_exception(self):
         """ Test check ParserException from Kivy parser"""
         kvlint = KvLint("<Widget>:")
         positive_diagnostic = kvlint.parse_exception()
@@ -51,7 +51,7 @@ class KvLintTest(unittest.TestCase):
         self.assertEqual(diagnostic["source"], KvLint.SOURCE)
         self.assertEqual(diagnostic["code"], KvLint.CODE)
 
-    def test_kvlint_parse_information(self):
+    def test_parse_information(self):
         """ Test check report information from parser """
         kvlint = KvLint("".join(["a" for x in range(0, 120)])+EOL)
         line_to_long = kvlint.parse_information()
@@ -122,3 +122,21 @@ class KvLintTest(unittest.TestCase):
         empty_file = kvlint.parse()
         self.assertIsInstance(empty_file, list)
         self.assertEqual(len(empty_file), 0)
+
+    def test_parse_base_exception(self):
+        """ Test check BaseException from Kivy parser"""
+        kvlint = KvLint('Label<>:\r\n  size: 123\r\n    width: 12 // 12\r\n    size: 1\r\n\r\n')
+        parser_exception = kvlint.parse_exception()
+        self.assertIsInstance(parser_exception, list)
+
+        self.assertEqual(len(parser_exception), 1)
+        diagnostic = parser_exception.pop()
+        self.assertEqual(diagnostic["severity"], KvLint.ERROR)
+        self.assertEqual(diagnostic["range"]["start"]['line'], 0)
+        self.assertEqual(diagnostic["range"]["end"]['line'], 0)
+        self.assertEqual(diagnostic["range"]["start"]['character'], 0)
+        self.assertEqual(diagnostic["range"]["end"]['character'], 0)
+        self.assertEqual(diagnostic["message"],
+                         "Kivy parser exception: 'NoneType' object is not subscriptable")
+        self.assertEqual(diagnostic["source"], KvLint.SOURCE)
+        self.assertEqual(diagnostic["code"], KvLint.CODE)

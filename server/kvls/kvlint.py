@@ -69,24 +69,34 @@ class KvLint(object):
         try:
             KvParser(content=self.file_content)
             # Diagnostic are clear. List will not be updated
-        except ParserException as result:
-            diagnostic.append({'range': {'start': {'line': result.line,
+        except ParserException as exception:
+            diagnostic.append({'range': {'start': {'line': exception.line,
                                                    'character': 0},
-                                         'end': {'line': result.line,
+                                         'end': {'line': exception.line,
                                                  'character': 0}},
                                'severity': self.ERROR,
                                'code': self.CODE,
                                'source': self.SOURCE,
-                               'message': result.args[0].split('...')[2]})
-        except SyntaxError as result:
-            diagnostic.append({'range': {'start': {'line': result.lineno - 1,
+                               'message': exception.args[0].split('...')[2]})
+        except SyntaxError as exception:
+            diagnostic.append({'range': {'start': {'line': exception.lineno - 1,
                                                    'character': 0},
-                                         'end': {'line': result.lineno - 1,
+                                         'end': {'line': exception.lineno - 1,
                                                  'character': 0}},
                                'severity': self.ERROR,
                                'code': self.CODE,
                                'source': self.SOURCE,
-                               'message': str(result.args[0])})
+                               'message': str(exception.args[0])})
+        except BaseException as exception:
+            diagnostic.append({'range': {'start': {'line': 0,
+                                                   'character': 0},
+                                         'end': {'line': 0,
+                                                 'character': 0}},
+                               'severity': self.ERROR,
+                               'code': self.CODE,
+                               'source': self.SOURCE,
+                               'message': "Kivy parser exception: " + str(exception)})
+
         return diagnostic
 
     def parse_information(self):

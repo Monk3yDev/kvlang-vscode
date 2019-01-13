@@ -1,42 +1,42 @@
-""" Module responsible for parsing and storing
-    information from the stdin and stdout between
-    client and the server"""
+"""Module responsible for parsing and storing information from the stdin and stdout.
+
+Client use stdin and the server stdout I/O.
+
+"""
+from __future__ import absolute_import
 import re
 import json
 from kvls.utils import EOL, CHARSET
 
 class Message(object):
-    """ Base class of the objects which handle messages
-        of the language server protocol specification"""
+    """Base class of the language server protocol specification."""
+
     def __init__(self):
+        """Initialize base message object."""
         self.length = 0
         self.message = None
         self.encoding = CHARSET
 
     def build(self):
-        """ Build and return full content of the message """
+        """Build and return full content of the message."""
         return 'Content-Length: {}{}Content-Type: ' \
                'application/vscode-jsonrpc; charset={}{}{}{}'. \
                format(self.length, EOL, self.encoding, EOL, EOL, self.message)
 
 class NotificationMessage(Message):
-    """ Class responsible for parsing and storing information
-        for the notification message which will be
-        send to the client"""
+    """Class responsible for parsing and storing information of the notification message."""
 
     def content(self, content, method):
-        """ Parse content of the message from dictionary to json format """
+        """Parse content of the message from dictionary to json format."""
         self.message = json.dumps({"jsonrpc": "2.0", "method": method, "params": content},
                                   separators=(',', ':'))
         self.length = len(self.message)
 
 class ResponseMessage(Message):
-    """ Class responsible for parsing and storing information
-        for the response message which will be
-        send to the client"""
+    """Class responsible for parsing and storing information of the response message."""
 
     def content(self, content, success, request_id):
-        """ Parse content of the message from dictionary to json format """
+        """Parse content of the message from dictionary to json format."""
         message_content = {}
         if success:
             message_content = {"jsonrpc": "2.0", "id": request_id, "result": content}
@@ -46,44 +46,44 @@ class ResponseMessage(Message):
         self.length = len(self.message)
 
 class RequestMessage(Message):
-    """ Class responsible for parsing and storing information
-        received in the request/notification message from the client"""
+    """Class responsible for parsing and storing information of the request/notification."""
 
     def content_length(self, line):
-        """ Parse Content length header """
+        """Parse Content length header."""
         match = re.match('Content-Length: ([0-9]*)', line)
         self.length = int(match.group(1))
 
     def content_type(self, line):
-        """ Parse content type header"""
+        """Parse content type header."""
         match = re.match('Content-Type: .*charset=(.*)', line)
         if match is not None:
             self.encoding = match.group(1)
         return match
 
     def content(self, content):
-        """ Parse content of the message from json to dictionary format """
+        """Parse content of the message from json to dictionary format."""
         self.message = json.loads(content, encoding=self.encoding)
 
     # Parsing is successful. Current method can be used
     def request_id(self):
-        """ Return id of the request """
+        """Return id of the request."""
         return self.message["id"]
 
     def method(self):
-        """ Return method name """
+        """Return method name."""
         return self.message["method"]
 
     def jsonrpc(self):
-        """ Return jsonrpc version """
+        """Return jsonrpc version."""
         return self.message["jsonrpc"]
 
     def params(self):
-        """ Return params included in request """
+        """Return params included in request."""
         return self.message["params"]
 
 class ErrorCodes(object):
-    """ The error constants in case a request fails """
+    """The error constants in case a request fails."""
+
     PARSE_ERROR = -32700
     INVALID_REQUEST = -32600
     METHOD_NOT_FOUND = -32601

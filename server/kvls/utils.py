@@ -1,5 +1,5 @@
-""" Utils module store variables and function used in
-    cross platform systems"""
+"""Utils module store variables and function used in cross platform systems."""
+from __future__ import absolute_import
 import os
 
 EOL_POSIX = '\r\n'

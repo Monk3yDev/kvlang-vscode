@@ -1,4 +1,5 @@
-""" Script which start KvLang Language Server """
+"""Script which start KvLang Language Server."""
+from __future__ import absolute_import
 import sys
 from kvls.kvlangserver import KvLangServer
 

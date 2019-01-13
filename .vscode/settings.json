@@ -28,6 +28,7 @@
         "./server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"
     ],
     "python.linting.pylintEnabled": true,
+    "python.linting.pydocstyleEnabled": false,
     "python.linting.enabled": true,
     "python.linting.pylintArgs": [
         "--enable=F,E,C,W,R"

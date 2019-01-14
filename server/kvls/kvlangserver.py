@@ -11,7 +11,7 @@ from kvls.kvlint import KvLint
 from kvls.logger import Logger
 
 # Disable logger in released code.
-Logger.DISABLED = False
+Logger.DISABLED = True
 
 class KvLangServer(object):
     """Class responsible for managing Language Server Procedures."""
@@ -33,6 +33,7 @@ class KvLangServer(object):
                            "textDocument/didSave": self.did_save,
                            "textDocument/didOpen": self.did_open,
                            "textDocument/didClose": self.did_close,
+                           "textDocument/didChange": self.did_change,
                            "textDocument/completion": self.completion,
                            "completionItem/resolve": self.resolve,
                            "shutdown": self.shutdown,
@@ -82,7 +83,7 @@ class KvLangServer(object):
                                                                 'willSave': False,
                                                                 'willSaveWaitUntil': False,
                                                                 'save': {'includeText': True}},
-                                           'completionProvider': {'resolveProvider': True}
+                                           #TODO 'completionProvider': {'resolveProvider': True}
                                           }}, True, request.request_id())
         self.send(response)
 
@@ -98,6 +99,10 @@ class KvLangServer(object):
         notification.content({'uri': request.params()["textDocument"]["uri"],
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
         self.send(notification)
+
+    def did_change(self, request):
+        """Handle DidChangeTextDocument Notification."""
+        pass
 
     def did_open(self, request):
         """Handle DidOpenTextDocumentParams Notification."""
@@ -117,7 +122,7 @@ class KvLangServer(object):
         self.send(notification)
 
     def completion(self, request):
-        """.Handle CompletionParams Request."""
+        """Handle CompletionParams Request."""
         # TODO Add full support for textDocument/completion with test
         response = ResponseMessage()
         response.content({'isIncomplete': False, 'items': []}, True, request.request_id())

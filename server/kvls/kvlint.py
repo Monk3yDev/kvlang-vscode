@@ -7,7 +7,7 @@ os.environ["KIVY_NO_CONSOLELOG"] = "1"
 # Import Kivy parser
 # Disable pylint warning, because environment variables must be set
 # before import of module kivy
-from kivy.lang.parser import Parser, ParserException # pylint: disable=C0413
+from kivy.lang import Parser, ParserException # pylint: disable=C0413
 from kvls.utils import EOL  # pylint: disable=C0413
 
 class KvParser(Parser):

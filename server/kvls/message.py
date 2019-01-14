@@ -6,7 +6,7 @@ Client use stdin and the server stdout I/O.
 from __future__ import absolute_import
 import re
 import json
-from kvls.utils import EOL, CHARSET
+from kvls.utils import EOL_LSP, CHARSET
 
 class Message(object):
     """Base class of the language server protocol specification."""
@@ -21,7 +21,7 @@ class Message(object):
         """Build and return full content of the message."""
         return 'Content-Length: {}{}Content-Type: ' \
                'application/vscode-jsonrpc; charset={}{}{}{}'. \
-               format(self.length, EOL, self.encoding, EOL, EOL, self.message)
+               format(self.length, EOL_LSP, self.encoding, EOL_LSP, EOL_LSP, self.message)
 
 class NotificationMessage(Message):
     """Class responsible for parsing and storing information of the notification message."""

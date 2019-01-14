@@ -25,18 +25,19 @@
     "categories": [
         "Programming Languages",
         "Snippets",
-        "Other"
+        "Other",
+        "Linters"
     ],
     "contributes": {
         "configuration": {
             "type": "object",
             "title": "KvLang configuration",
             "properties": {
-                "kvlang.pythonCommand": {
+                "kvlang.pythonPath": {
                     "scope": "resource",
                     "type": "string",
                     "default": "python",
-                    "description": "Python command for running KvLang Language Server. Restart of the Visual Studio Code is needed."
+                    "description": "Python path for running KvLang Language Server. Restart of the Visual Studio Code is needed."
                 }
             }
         },

@@ -24,8 +24,8 @@ export function activate(context: ExtensionContext) {
 	// Get KvLang configuration
 	const configuration = workspace.getConfiguration();
 	// Read value from configuration parameter
-	const pythonCommand = configuration.get('kvlang.pythonCommand', "python");
+	const pythonPath = configuration.get('kvlang.pythonPath', "python");
 	let serverModule = context.asAbsolutePath(path.join('server', 'server.py'));
-	let disposable = startLangServer(pythonCommand, [serverModule]);
+	let disposable = startLangServer(pythonPath, [serverModule]);
 	context.subscriptions.push(disposable);
 }

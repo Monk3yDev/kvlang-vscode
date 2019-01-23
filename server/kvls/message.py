@@ -64,6 +64,10 @@ class RequestMessage(Message):
         """Parse content of the message from json to dictionary format."""
         self.message = json.loads(content, encoding=self.encoding)
 
+    def is_notification(self):
+        """Check is request message is notification."""
+        return self.message.get("id", None) is None
+
     # Parsing is successful. Current method can be used
     def request_id(self):
         """Return id of the request."""

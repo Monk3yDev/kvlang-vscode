@@ -5,14 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.0.4 - 2019-01-23
+
+### Added in 0.0.4
+
+- Python path can be changed from extension status bar
+- Language server will restart when valid python path is provided in settings
+- Updated LS server
+
 ## 0.0.3 - 2019-01-14
 
 ### Added in 0.0.3
 
-- Reduce LSP server crashes in Python 3.x
-- LSP server should always start in Python 2.7
+- Reduce LS server crashes in Python 3.x
+- LS server should always start in Python 2.7
 - Added new linter information: Trailing whitespace, Final newline missing, Trailing newlines, Kivy parser exception
-- Updated LSP client
+- Updated LS client
 - Changed name of setting pythonCommand to pythonPath
 - Cleanup in the code
 

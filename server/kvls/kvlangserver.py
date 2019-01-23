@@ -6,7 +6,7 @@ specification included in version 3.x of the language server protocol.
 
 """
 from __future__ import absolute_import
-from kvls.message import RequestMessage, ResponseMessage, NotificationMessage
+from kvls.message import RequestMessage, ResponseMessage, NotificationMessage, ErrorCodes
 from kvls.kvlint import KvLint
 from kvls.logger import Logger
 
@@ -139,7 +139,12 @@ class KvLangServer(object):
         """Handle unknown method which do not exist in procedures."""
         self.logger.log(Logger.INFO, "Server do not support request with method='{}'". \
                         format(request.method()))
-        raise Exception("Server do not support request with method='{}'".format(request.method()))
+        # Ignore Notification message
+        if request.is_notification() is False:
+            response = ResponseMessage()
+            response.content({'code': ErrorCodes.METHOD_NOT_FOUND, 'message': 'Method not found'},
+                             False, request.request_id())
+            self.send(response)
 
     def shutdown(self, request):
         """Handle Shutdown Request."""

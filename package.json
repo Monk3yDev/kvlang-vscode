@@ -2,7 +2,7 @@
     "name": "kvlang",
     "displayName": "KvLang",
     "description": "Support for the KvLang language of Kivy: Cross-platform Python Framework for NUI Development",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "Monk3yDev",
     "license": "MIT",
     "engines": {
@@ -20,7 +20,8 @@
         "python",
         "kivy",
         "kvlang",
-        "kv"
+        "kv",
+        "linter"
     ],
     "categories": [
         "Programming Languages",
@@ -37,7 +38,7 @@
                     "scope": "resource",
                     "type": "string",
                     "default": "python",
-                    "description": "Python path for running KvLang Language Server. Restart of the Visual Studio Code is needed."
+                    "description": "Python path which will be used by KvLang Language Server."
                 }
             }
         },

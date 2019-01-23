@@ -1,0 +1,20 @@
+Content-Length: 66
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}}
+Content-Length: 83
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "$/setTraceNotification", "params": {"value": "off"}}
+Content-Length: 72
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "id": 12, "method": "$/unknownMethod", "params": {}}
+Content-Length: 66
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "id": 1, "method": "shutdown", "params": null}
+Content-Length: 53
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "exit", "params": null}

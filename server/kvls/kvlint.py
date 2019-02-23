@@ -1,6 +1,7 @@
 """Simple KvLang linting module to show parser errors."""
 from __future__ import absolute_import
 import os
+import re
 # Disable stdout printout from kivy
 os.environ["KIVY_NO_FILELOG"] = "1"
 os.environ["KIVY_NO_CONSOLELOG"] = "1"
@@ -10,12 +11,10 @@ os.environ["KIVY_NO_CONSOLELOG"] = "1"
 from kivy.lang import Parser, ParserException # pylint: disable=C0413
 from kvls.utils import EOL  # pylint: disable=C0413
 
+SINGLE_RULE = re.compile("^<[a-zA-Z0-9_\\- ]+>:")
+
 class KvParser(Parser):
-    """Class only override method execute_directives.
-
-    For more information see Class Parser.
-
-    """
+    """Class only override method execute_directives."""
 
     def execute_directives(self):
         """Override method execute_directives.
@@ -68,16 +67,11 @@ class KvLint(object):
         """Run all available parsers in the KvLint."""
         diagnostic = []
         diagnostic.extend(self.parse_exception())
-        diagnostic.extend(self.parse_information())
+        diagnostic.extend(self.parse_other())
         return diagnostic
 
     def parse_exception(self):
-        """Parse file content to catch ParserException from Kivy parser.
-
-        This data from exception will be returned as list of the diagnostic elements stored in
-        dictionary. Empty list is returned when there is no linting problems.
-
-        """
+        """Parse file content to catch ParserException from Kivy parser."""
         diagnostic = []
         try:
             KvParser(content=self.file_content)
@@ -112,61 +106,117 @@ class KvLint(object):
 
         return diagnostic
 
-    def parse_information(self):
-        """Parse file content to catch problems other than exception.
-
-        Empty list is returned when there is no linting problems.
-        List of information:
-            * Line to long
-            * Trailing whitespace
-            * Final newline missing
-            * Trailing newlines
-
-        """
+    def parse_other(self):
+        """Parse file content to catch problems other than exception."""
         diagnostic = []
         line_index = 0
         for line in self.file_content.splitlines():
-            length = len(line)
-            if length >= 110:
-                diagnostic.append({'range': {'start': {'line': line_index,
-                                                       'character': 0},
-                                             'end': {'line': line_index,
-                                                     'character': 0}},
-                                   'severity': self.INFORMATION,
-                                   'code': self.CODE,
-                                   'source': self.SOURCE,
-                                   'message': "Line to long ({},{})".format(length, 110)})
-            if length >= 1:
-                if line[length-1].isspace():
-                    diagnostic.append({'range': {'start': {'line': line_index,
-                                                           'character': 0},
-                                                 'end': {'line': line_index,
-                                                         'character': 0}},
-                                       'severity': self.INFORMATION,
-                                       'code': self.CODE,
-                                       'source': self.SOURCE,
-                                       'message': "Trailing whitespace"})
+            diagnostic.extend(common_validation(line, line_index))
+            diagnostic.extend(rule_validation(line, line_index))
             line_index += 1
-
         lines = self.file_content.splitlines(True)
         length = len(lines)
-        if length >= 1 and lines[length-1].find(EOL) == -1:
-            diagnostic.append({'range': {'start': {'line': length-1,
-                                                   'character': 0},
-                                         'end': {'line': length-1,
-                                                 'character': 0}},
-                               'severity': self.INFORMATION,
-                               'code': self.CODE,
-                               'source': self.SOURCE,
-                               'message': "Final newline missing"})
-
-        if length >= 1 and lines[length-1].find(EOL) != -1 and lines[length-1].isspace():
-            diagnostic.append({'range': {'start': {'line': length-1,
-                                                   'character': 0},
-                                         'end': {'line': length-1,
-                                                 'character': 0}},
-                               'severity': self.INFORMATION,
-                               'code': self.CODE,
-                               'source': self.SOURCE,
-                               'message': "Trailing newlines"})
+        if length >= 1:
+            diagnostic.extend(new_line_validation(lines[length-1], length-1))
         return diagnostic
+
+
+def new_line_validation(line, line_index):
+    """Perform lint check with newlines."""
+    diagnostic = []
+    if line.find(EOL) == -1:
+        diagnostic.append({'range': {'start': {'line': line_index,
+                                               'character': 0},
+                                     'end': {'line': line_index,
+                                             'character': 0}},
+                           'severity': KvLint.INFORMATION,
+                           'code': KvLint.CODE,
+                           'source': KvLint.SOURCE,
+                           'message': "Final newline missing"})
+
+    if line.find(EOL) != -1 and line.isspace():
+        diagnostic.append({'range': {'start': {'line': line_index,
+                                               'character': 0},
+                                     'end': {'line': line_index,
+                                             'character': 0}},
+                           'severity': KvLint.INFORMATION,
+                           'code': KvLint.CODE,
+                           'source': KvLint.SOURCE,
+                           'message': "Trailing newlines"})
+    return diagnostic
+
+
+def common_validation(line, line_index):
+    """Perform lint check on the line."""
+    diagnostic = []
+    length = len(line)
+    if length >= 110:
+        diagnostic.append({'range': {'start': {'line': line_index,
+                                               'character': 0},
+                                     'end': {'line': line_index,
+                                             'character': 0}},
+                           'severity': KvLint.INFORMATION,
+                           'code': KvLint.CODE,
+                           'source': KvLint.SOURCE,
+                           'message': "Line to long ({},{})".format(length, 110)})
+    if length >= 1:
+        if line[length-1].isspace():
+            diagnostic.append({'range': {'start': {'line': line_index,
+                                                   'character': 0},
+                                         'end': {'line': line_index,
+                                                 'character': 0}},
+                               'severity': KvLint.INFORMATION,
+                               'code': KvLint.CODE,
+                               'source': KvLint.SOURCE,
+                               'message': "Trailing whitespace"})
+    return diagnostic
+
+
+def rule_validation(line, line_index):
+    """Run all KvLang rule validations."""
+    diagnostic = []
+    if SINGLE_RULE.match(line):
+        diagnostic.extend(single_rule_validation(line, line_index))
+    return diagnostic
+
+
+def single_rule_validation(line, line_index):
+    """Perform lint check on single widget rule."""
+    diagnostic = []
+    if single_rule_dash(line):
+        diagnostic.append({'range': {'start': {'line': line_index,
+                                               'character': 0},
+                                     'end': {'line': line_index,
+                                             'character': 0}},
+                           'severity': KvLint.WARNING,
+                           'code': KvLint.CODE,
+                           'source': KvLint.SOURCE,
+                           'message': "Improper handling of '-' in KvLang rule"})
+    if rule_whitespace(line):
+        diagnostic.append({'range': {'start': {'line': line_index,
+                                               'character': 0},
+                                     'end': {'line': line_index,
+                                             'character': 0}},
+                           'severity': KvLint.INFORMATION,
+                           'code': KvLint.CODE,
+                           'source': KvLint.SOURCE,
+                           'message': "Whitespace in KvLang rule"})
+    return diagnostic
+
+
+def single_rule_dash(line):
+    """Check if single rule is build properly with dash."""
+    if line.find("-") in (-1, 1) and line.count('-') <= 1:
+        return False
+    return True
+
+
+def rule_whitespace(line):
+    """Check if rule is build without whitespace."""
+    for character in line:
+        if character != '>':
+            if character.isspace():
+                return True
+        else:
+            break
+    return False

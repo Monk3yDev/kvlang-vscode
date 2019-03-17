@@ -1,6 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "KvLang",
+	"scopeName": "source.kv",
 	"patterns": [
 		{
 			"name": "string.quoted.double.kv",
@@ -166,6 +167,5 @@
             "name": "constant.numeric.kv",
             "match": "\\d"
 		}
-	],
-	"scopeName": "source.kv"
+	]
 }

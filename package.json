@@ -60,6 +60,16 @@
                 "language": "kv",
                 "scopeName": "source.kv",
                 "path": "./syntaxes/kv.tmLanguage.json"
+            },
+            {
+                "injectTo": [
+                    "source.python"
+                ],
+                "scopeName": "kv-string.injection",
+                "path": "./syntaxes/embedded-grammars-kv.json",
+                "embeddedLanguages": {
+                    "meta.embedded.source.kv": "kv"
+                }
             }
         ],
         "snippets": [

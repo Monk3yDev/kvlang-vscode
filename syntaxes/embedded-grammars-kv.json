@@ -1,0 +1,29 @@
+{
+	"fileTypes": [
+		"py"
+	],
+	"injectionSelector": "L:source",
+	"scopeName": "kv-string.injection",
+	"patterns": [
+		{
+			"contentName": "meta.embedded.source.kv",
+			"begin": "(#\\<KvLang\\>)",
+			"end": "(#\\</KvLang\\>)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.other.unit"
+				}
+			},
+			"endCaptures": {
+				"1": {
+					"name": "keyword.other.unit"
+				}
+			},
+			"patterns": [
+				{
+					"include": "source.kv"
+				}
+			]
+		}
+	]
+}

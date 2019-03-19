@@ -1,0 +1,24 @@
+{
+    "embeddednobuilder": {
+        "prefix": "kvev",
+        "body": [
+            "KV = '''",
+            "#<KvLang>",
+            "${1:Content}",
+            "#</KvLang>",
+            "'''"
+        ],
+        "description": "Code snippet for variable with embedded language."
+    },
+    "embeddedbuilder": {
+        "prefix": "kveb",
+        "body": [
+            "Builder.load_string('''",
+            "#<KvLang>",
+            "${1:Content}",
+            "#</KvLang>",
+            "''')"
+        ],
+        "description": "Code snippet for Builder.load_string() with embedded language."
+    } 
+}

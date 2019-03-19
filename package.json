@@ -88,6 +88,10 @@
             {
                 "language": "kv",
                 "path": "./snippets/uix.complex.ux.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/embedded.kvlang.json"
             }
         ]
     },

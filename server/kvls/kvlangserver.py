@@ -8,6 +8,7 @@ specification included in version 3.x of the language server protocol.
 from __future__ import absolute_import
 from kvls.message import RequestMessage, ResponseMessage, NotificationMessage, ErrorCodes
 from kvls.kvlint import KvLint
+from kvls.document import TextDocumentItem, TextDocumentManager
 from kvls.logger import Logger
 
 # Disable logger in released code.
@@ -27,6 +28,7 @@ class KvLangServer(object):
         self.logger = Logger("KvLangLogs")
         self.reader = stdin
         self.writer = stdout
+        self.document_manager = TextDocumentManager()
         self.server_status = self.OFF_LINE
         self.procedures = {"initialize": self.initialize,
                            "initialized": self.initialized,
@@ -93,10 +95,12 @@ class KvLangServer(object):
 
     def did_save(self, request):
         """Handle DidSaveTextDocument Notification."""
-        kvlint = KvLint(request.params()["text"])
+        document = self.document_manager.get(request.params()["textDocument"]["uri"])
+        document.text = request.params()["text"]
+        kvlint = KvLint(document.text)
         diagnostic = kvlint.parse()
         notification = NotificationMessage()
-        notification.content({'uri': request.params()["textDocument"]["uri"],
+        notification.content({'uri': document.uri,
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
         self.send(notification)
 
@@ -106,16 +110,21 @@ class KvLangServer(object):
 
     def did_open(self, request):
         """Handle DidOpenTextDocumentParams Notification."""
-        kvlint = KvLint(request.params()["textDocument"]["text"])
+        document = TextDocumentItem(request.params()["textDocument"]["uri"],
+                                    request.params()["textDocument"]["languageId"],
+                                    request.params()["textDocument"]["text"])
+        self.document_manager.add(document)
+        kvlint = KvLint(document.text)
         diagnostic = kvlint.parse()
         notification = NotificationMessage()
-        notification.content({'uri': request.params()["textDocument"]["uri"],
+        notification.content({'uri': document.uri,
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
         self.send(notification)
 
     def did_close(self, request):
         """Handle DidCloseTextDocumentParams Notification."""
         # Clear diagnostic
+        self.document_manager.remove(request.params()["textDocument"]["uri"])
         notification = NotificationMessage()
         notification.content({'uri': request.params()["textDocument"]["uri"],
                               'diagnostics': []}, 'textDocument/publishDiagnostics')

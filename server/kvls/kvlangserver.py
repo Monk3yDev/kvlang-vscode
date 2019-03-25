@@ -28,8 +28,9 @@ class KvLangServer(object):
         self.logger = Logger("KvLangLogs")
         self.reader = stdin
         self.writer = stdout
-        self.document_manager = TextDocumentManager()
         self.server_status = self.OFF_LINE
+        self.document_manager = TextDocumentManager()
+        self.kvlint = KvLint()
         self.procedures = {"initialize": self.initialize,
                            "initialized": self.initialized,
                            "textDocument/didSave": self.did_save,
@@ -97,8 +98,7 @@ class KvLangServer(object):
         """Handle DidSaveTextDocument Notification."""
         document = self.document_manager.get(request.params()["textDocument"]["uri"])
         document.text = request.params()["text"]
-        kvlint = KvLint(document.text)
-        diagnostic = kvlint.parse()
+        diagnostic = self.kvlint.parse(document)
         notification = NotificationMessage()
         notification.content({'uri': document.uri,
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')
@@ -114,8 +114,7 @@ class KvLangServer(object):
                                     request.params()["textDocument"]["languageId"],
                                     request.params()["textDocument"]["text"])
         self.document_manager.add(document)
-        kvlint = KvLint(document.text)
-        diagnostic = kvlint.parse()
+        diagnostic = self.kvlint.parse(document)
         notification = NotificationMessage()
         notification.content({'uri': document.uri,
                               'diagnostics': diagnostic}, 'textDocument/publishDiagnostics')

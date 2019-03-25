@@ -59,22 +59,22 @@ class KvLint(object):
     SOURCE = "KvLint"
     CODE = "KvLang100"
 
-    def __init__(self, file_content):
+    def __init__(self):
         """Initialize KvLint object."""
-        self.file_content = file_content
+        pass
 
-    def parse(self):
+    def parse(self, document):
         """Run all available parsers in the KvLint."""
         diagnostic = []
-        diagnostic.extend(self.parse_exception())
-        diagnostic.extend(self.parse_other())
+        diagnostic.extend(self.parse_exception(document))
+        diagnostic.extend(self.parse_other(document))
         return diagnostic
 
-    def parse_exception(self):
+    def parse_exception(self, document):
         """Parse file content to catch ParserException from Kivy parser."""
         diagnostic = []
         try:
-            KvParser(content=self.file_content)
+            KvParser(content=document.text)
             # Diagnostic are clear. List will not be updated
         except ParserException as exception:
             diagnostic.append({'range': {'start': {'line': exception.line,
@@ -106,15 +106,15 @@ class KvLint(object):
 
         return diagnostic
 
-    def parse_other(self):
+    def parse_other(self, document):
         """Parse file content to catch problems other than exception."""
         diagnostic = []
         line_index = 0
-        for line in self.file_content.splitlines():
+        for line in document.text.splitlines():
             diagnostic.extend(common_validation(line, line_index))
             diagnostic.extend(rule_validation(line, line_index))
             line_index += 1
-        lines = self.file_content.splitlines(True)
+        lines = document.text.splitlines(True)
         length = len(lines)
         if length >= 1:
             diagnostic.extend(new_line_validation(lines[length-1], length-1))

@@ -6,19 +6,27 @@ import os
 os.environ["KIVY_UNITTEST"] = "0"
 import kvls.kvlint as KV # pylint: disable=C0413
 from kvls.utils import EOL # pylint: disable=C0413
+from kvls.document import TextDocumentItem # pylint: disable=C0413
 
 
 class KvLintTest(unittest.TestCase):
     """KvLint UnitTest."""
 
+    def setUp(self):
+        self.kv_document = TextDocumentItem("file.kv", "kv", "")
+        self.kvlint = KV.KvLint()
+
+    def tearDown(self):
+        pass
+
     def test_parse_exception(self):
         """Test check ParserException from Kivy parser."""
-        kvlint = KV.KvLint("<Widget>:")
-        positive_diagnostic = kvlint.parse_exception()
-        kvlint = KV.KvLint("<AnchorLayout")
-        negative_diagnostic = kvlint.parse_exception()
-        kvlint = KV.KvLint("AnchorLayout: {}    height: '28sp".format(EOL))
-        negative_diagnostic_eol = kvlint.parse_exception()
+        self.kv_document.text = "<Widget>:"
+        positive_diagnostic = self.kvlint.parse_exception(self.kv_document)
+        self.kv_document.text = "<AnchorLayout"
+        negative_diagnostic = self.kvlint.parse_exception(self.kv_document)
+        self.kv_document.text = "AnchorLayout: {}    height: '28sp".format(EOL)
+        negative_diagnostic_eol = self.kvlint.parse_exception(self.kv_document)
         self.assertIsInstance(positive_diagnostic, list)
         self.assertListEqual(positive_diagnostic, [])
 
@@ -48,8 +56,9 @@ class KvLintTest(unittest.TestCase):
 
     def test_parse_base_exception(self):
         """Test check BaseException from Kivy parser."""
-        kvlint = KV.KvLint('Label<>:\r\n  size: 123\r\n    width: 12 // 12\r\n    size: 1\r\n\r\n')
-        parser_exception = kvlint.parse_exception()
+        self.kv_document.text = 'Label<>:\r\n  size: 123\r\n    ' \
+                                'width: 12 // 12\r\n    size: 1\r\n\r\n'''
+        parser_exception = self.kvlint.parse_exception(self.kv_document)
         self.assertIsInstance(parser_exception, list)
 
         self.assertEqual(len(parser_exception), 1)
@@ -66,13 +75,13 @@ class KvLintTest(unittest.TestCase):
 
     def test_parse_other(self):
         """Test check other validations."""
-        kvlint = KV.KvLint("")
-        diagnostics = kvlint.parse()
+        self.kv_document.text = ""
+        diagnostics = self.kvlint.parse(self.kv_document)
         self.assertIsInstance(diagnostics, list)
         self.assertEqual(len(diagnostics), 0)
 
-        kvlint = KV.KvLint("<A>:  " + EOL + EOL)
-        diagnostics = kvlint.parse()
+        self.kv_document.text = "<A>:  " + EOL + EOL
+        diagnostics = self.kvlint.parse(self.kv_document)
         self.assertIsInstance(diagnostics, list)
         self.assertEqual(len(diagnostics), 2)
 

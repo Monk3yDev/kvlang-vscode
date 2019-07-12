@@ -96,7 +96,8 @@
         ]
     },
     "activationEvents": [
-        "onLanguage:kv"
+        "onLanguage:kv",
+        "onLanguage:python"
     ],
     "main": "./client/out/src/extension",
     "scripts": {

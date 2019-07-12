@@ -23,8 +23,8 @@
         "yml"
     ],
     "python.pythonPath": "C:\\Users\\Monkey\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
-    "python.unitTest.nosetestsEnabled": true,
-    "python.unitTest.nosetestArgs": [
+    "python.testing.nosetestsEnabled": true,
+    "python.testing.nosetestArgs": [
         "./server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"
     ],
     "python.linting.pylintEnabled": true,

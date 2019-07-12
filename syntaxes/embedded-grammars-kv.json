@@ -7,16 +7,22 @@
 	"patterns": [
 		{
 			"contentName": "meta.embedded.source.kv",
-			"begin": "(#\\<KvLang\\>)",
-			"end": "(#\\</KvLang\\>)",
+			"begin": "(#\\<KvLang\\>(.*))",
+			"end": "(#\\</KvLang\\>(.*))",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.other.unit"
+				},
+				"2": {
+					"name": "comment.line.number-sign.kv"
 				}
 			},
 			"endCaptures": {
 				"1": {
 					"name": "keyword.other.unit"
+				},
+				"2": {
+					"name": "comment.line.number-sign.kv"
 				}
 			},
 			"patterns": [

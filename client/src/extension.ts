@@ -19,7 +19,8 @@ function createLanguageClient(command: string, serverArgs: string[]): LanguageCl
 		debug: { command: command, args: serverArgs }
 	};
 	const clientOptions: LanguageClientOptions = {
-		documentSelector: [{scheme: 'file', language: 'kv'}]
+		documentSelector: [{scheme: 'file', language: 'kv'},
+		                   {scheme: 'file', language: 'python'}]
 	}
 	return new LanguageClient('kvls', 'KvLang Server', serverOptions, clientOptions, false);
 }

@@ -54,7 +54,7 @@ class ServerTest(unittest.TestCase):
                '"kivy.kv","diagnostics":['
         self.assertNotEqual(content.find(find), -1)
         find = '{"range":{"start":{"line":0,"character":0},"end":' \
-               '{"line":0,"character":0}},"severity":1,"code":"KvLang100","source":"KvLint"' \
+               '{"line":0,"character":0}},"severity":1,"code":"E001","source":"KvLint"' \
                ',"message":"\\nInvalid data after declaration"}'
         self.assertNotEqual(content.find(find), -1)
         # Diagnostic DidOpenTextDocumentParams
@@ -62,7 +62,7 @@ class ServerTest(unittest.TestCase):
                '"kivy.kv","diagnostics":['
         self.assertNotEqual(content.find(find), -1)
         find = '{"range":{"start":{"line":0,"character":0},"end":' \
-               '{"line":0,"character":0}},"severity":1,"code":"KvLang100","source":"KvLint"' \
+               '{"line":0,"character":0}},"severity":1,"code":"E001","source":"KvLint"' \
                ',"message":"\\nInvalid rule (must be inside <>)"}'
         self.assertNotEqual(content.find(find), -1)
 

@@ -21,3 +21,6 @@ client/out/**
 
 # package
 *.vsix
+
+# Output file from the test
+server/tests/stdout.txt

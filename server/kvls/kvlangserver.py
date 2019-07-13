@@ -6,7 +6,8 @@ specification included in version 3.x of the language server protocol.
 
 """
 from __future__ import absolute_import
-from kvls.message import RequestMessage, ResponseMessage, NotificationMessage, ErrorCodes
+from kvls.message import RequestMessage, ResponseMessage, NotificationMessage, ErrorCodes,\
+    MessageType
 from kvls.kvlint import KvLint
 from kvls.document import TextDocumentItem, TextDocumentManager
 from kvls.logger import Logger
@@ -92,7 +93,11 @@ class KvLangServer(object):
 
     def initialized(self, _):
         """Handle Initialized Notification."""
-        pass
+        if self.kvlint.KIVY_IMPORTED is False:
+            notification = NotificationMessage()
+            notification.content({'type': MessageType.INFO, 'message': self.kvlint.KIVY_IMPORT_MSG},
+                                 'window/showMessage')
+            self.send(notification)
 
     def did_save(self, request):
         """Handle DidSaveTextDocument Notification."""

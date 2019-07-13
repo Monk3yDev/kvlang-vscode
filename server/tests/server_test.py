@@ -80,3 +80,15 @@ class ServerTest(unittest.TestCase):
         second = content.find("Method not found", len("Method not found") + first)
         self.assertNotEqual(first, -1)
         self.assertEqual(second, -1)
+
+
+    def test_initialized_with_message(self):
+        """Test check message notification to client during initialized method."""
+        server = KvLangServer(self.stdin, self.stdout)
+        server.kvlint.KIVY_IMPORTED = False
+        server_exit_code = server.run()
+        self.assertEqual(server_exit_code, KvLangServer.EXIT_SUCCESS)
+        results = open('./server/tests/stdout.txt', mode='r')
+        content = "".join(results.readlines())
+        results.close()
+        self.assertNotEqual(content.find("KvLint was not able import kivy module."), -1)

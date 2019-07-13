@@ -22,7 +22,7 @@
         "typescriptreact",
         "yml"
     ],
-    "python.pythonPath": "C:\\Users\\Monkey\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
+    "python.pythonPath": "python",
     "python.testing.nosetestsEnabled": true,
     "python.testing.nosetestArgs": [
         "./server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"

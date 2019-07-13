@@ -1,14 +1,7 @@
 """Simple KvLang linting module to show parser errors."""
 from __future__ import absolute_import
-import os
-# Disable stdout printout from kivy
-os.environ["KIVY_NO_FILELOG"] = "1"
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
-# Import Kivy parser
-# Disable pylint warning, because environment variables must be set
-# before import of module kivy
-from kivy.lang import Parser, ParserException # pylint: disable=C0413
 from kvls.utils import EOL  # pylint: disable=C0413
+from kvls.lang import Parser, ParserException, KIVY_IMPORTED, KIVY_IMPORT_MSG
 
 class Severity(object):
     """Data class of the lint result.
@@ -61,6 +54,8 @@ class KvLint(object):
     """
 
     SOURCE = "KvLint"
+    KIVY_IMPORTED = KIVY_IMPORTED
+    KIVY_IMPORT_MSG = KIVY_IMPORT_MSG
 
     def __init__(self):
         """Initialize KvLint object."""

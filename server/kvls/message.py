@@ -98,3 +98,12 @@ class ErrorCodes(object):
     SERVER_NOT_INITIALIZED = -32002
     UNKNOWN_ERROR_CODE = -32001
     REQUEST_CANCELLED = -32800
+
+
+class MessageType(object):
+    """Message types used for displaying message in client/server."""
+
+    ERROR = 1
+    WARNING = 2
+    INFO = 3
+    LOG = 3

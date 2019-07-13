@@ -6,6 +6,7 @@ A Visual Studio Code extension with small support for the KvLang language of Kiv
 - Kivy language snippets
 - Basic snippets of the uix widget inside class rule
 - Linter syntax parser with error detection using language server for KvLang
+- KvLang as Embedded language in files with python extension
 
 ![Kivy Snippets](images/snippets_kvlang.gif)
 
@@ -24,7 +25,7 @@ A Visual Studio Code extension with small support for the KvLang language of Kiv
 
 ## Requirements
 
-- Visual Studio Code 1.26.0 or newer
+- Visual Studio Code 1.34.0 or newer
 - Python 3.x or 2.7 for the language server
 - Kivy open source Python library
 
@@ -42,5 +43,5 @@ A Visual Studio Code extension with small support for the KvLang language of Kiv
 ## Known Issues
 
 - Language server is implemented in Python. Lack of it will cause problems with extension
-- Kivy module is also mandatory. Without this module server will never start
+- Kivy module is also mandatory. KvLint will show only basic lint information when module is not imported correctly
 - When lint messages are not cleared or updated, restart of Visual Code is required

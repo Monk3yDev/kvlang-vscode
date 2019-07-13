@@ -6,7 +6,7 @@
     "version": "0.0.4",
     "publisher": "Monk3yDev",
     "engines": {
-        "vscode": "^1.26.0"
+        "vscode": "^1.34.0"
     },
     "repository": {
         "type": "git",
@@ -17,12 +17,12 @@
     },
     "scripts": {},
     "devDependencies": {
-        "@types/node": "9.4.7",
-        "typescript": "^3.2.2",
-        "vscode": "^1.1.22"
+        "@types/node": "11.13.17",
+        "typescript": "^3.5.3",
+        "vscode": "^1.1.35"
     },
     "dependencies": {
-        "vscode-languageclient": "^4.4.0",
-        "vscode-languageserver-protocol": "^3.10.3"
+        "vscode-languageclient": "^5.2.1",
+        "vscode-languageserver-protocol": "^3.14.1"
     }
 }

@@ -1,4 +1,4 @@
-"""Module contains classes responsible for document’s management in the language server."""
+"""Module contains classes responsible for document's management in the language server."""
 from __future__ import absolute_import
 import re
 from kvls.utils import EOL

@@ -36,7 +36,7 @@ class KvLintTest(unittest.TestCase):
         self.assertEqual(diagnostic["range"]["end"]['line'], 0)
         self.assertEqual(diagnostic["range"]["start"]['character'], 0)
         self.assertEqual(diagnostic["range"]["end"]['character'], 0)
-        self.assertEqual(diagnostic["message"], "\nInvalid rule (must be inside <>)")
+        self.assertEqual(diagnostic["message"], "Invalid rule (must be inside <>)")
         # Negative diagnostic EOL
         self.kv_document.text = "AnchorLayout: {}    height: '28sp".format(EOL)
         diagnostic = KV.parse_exception(self.kv_document, self.kv_document.beginning_index)
@@ -116,7 +116,7 @@ class KvLintTest(unittest.TestCase):
             self.assertEqual(diagnostics[0]["range"]["end"]['line'], 2)
             self.assertEqual(diagnostics[0]["range"]["start"]['character'], 0)
             self.assertEqual(diagnostics[0]["range"]["end"]['character'], 0)
-            self.assertEqual(diagnostics[0]["message"], "\nInvalid rule (must be inside <>)")
+            self.assertEqual(diagnostics[0]["message"], "Invalid rule (must be inside <>)")
 
         # Lack of embedded kvlang in python file
         self.python_document.text = '#<KvLang>{}<AnchorLayout{}#</KvLa'.format(EOL, EOL)

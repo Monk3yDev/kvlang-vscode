@@ -55,7 +55,7 @@ class ServerTest(unittest.TestCase):
         self.assertNotEqual(content.find(find), -1)
         find = '{"range":{"start":{"line":0,"character":0},"end":' \
                '{"line":0,"character":0}},"severity":1,"code":"E001","source":"KvLint"' \
-               ',"message":"\\nInvalid data after declaration"}'
+               ',"message":"Invalid data after declaration"}'
         self.assertNotEqual(content.find(find), -1)
         # Diagnostic DidOpenTextDocumentParams
         find = '{"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"uri":' \
@@ -63,7 +63,7 @@ class ServerTest(unittest.TestCase):
         self.assertNotEqual(content.find(find), -1)
         find = '{"range":{"start":{"line":0,"character":0},"end":' \
                '{"line":0,"character":0}},"severity":1,"code":"E001","source":"KvLint"' \
-               ',"message":"\\nInvalid rule (must be inside <>)"}'
+               ',"message":"Invalid rule (must be inside <>)"}'
         self.assertNotEqual(content.find(find), -1)
 
     def test_unknown_method(self):

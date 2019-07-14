@@ -158,7 +158,7 @@ def parse_exception(document, beginning_index):
                                     'character': 0},
                           'end': {'line': beginning_index + exception.line,
                                   'character': 0}},
-                'message': exception.args[0].split('...')[2]}
+                'message': exception.args[0].split('...')[2].strip()}
     except SyntaxError as exception:
         return {'range': {'start': {'line': beginning_index + exception.lineno - 1,
                                     'character': 0},

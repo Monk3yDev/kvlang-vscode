@@ -96,7 +96,7 @@ class KvLangServer(object):
         if self.kvlint.KIVY_IMPORTED is False:
             notification = NotificationMessage()
             notification.content({'type': MessageType.INFO, 'message': self.kvlint.KIVY_IMPORT_MSG},
-                                 'window/showMessage')
+                                 'window/logMessage')
             self.send(notification)
 
     def did_save(self, request):

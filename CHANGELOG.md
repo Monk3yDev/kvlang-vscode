@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.0.5 - 2019-07-15
+
+### Added in 0.0.5
+
+- Added KvLang as Embedded language in files with python extension
+- Language server should start even when module kivy is not installed under selected python path
+- Updated KvLint to work properly with .kv and .py files
+- Update of language client and KvLang extension requirements
+
 ## 0.0.4 - 2019-01-23
 
 ### Added in 0.0.4

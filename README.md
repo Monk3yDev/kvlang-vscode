@@ -36,12 +36,26 @@ A Visual Studio Code extension with small support for the KvLang language of Kiv
 
 ## TODO
 
-- Add code formating
+- Add code formatting
 - Add IntelliSense support
 - Improve Kvlang Language Server
 
 ## Known Issues
 
 - Language server is implemented in Python. Lack of it will cause problems with extension
-- Kivy module is also mandatory. KvLint will show only basic lint information when module is not imported correctly
+- Kivy module is also mandatory. KvLint will show only basic lint information when module is missing from used python path
 - When lint messages are not cleared or updated, restart of Visual Code is required
+
+## Embedded language
+
+- To activate new functionality special keyword must be used for language detection
+- Two snippets can be used in the extension to create current keyword "kveb" and "kvev"
+
+```python
+#<KvLang>
+#</KvLang>
+```
+
+![KvLang as Embedded language](images/kivy_embedded_language.png)
+
+![KvLang snippets for Embedded language](images/kivy_embedded_language.gif)

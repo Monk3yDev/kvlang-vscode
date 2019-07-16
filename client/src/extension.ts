@@ -13,10 +13,10 @@ let languageClient: LanguageClient;
 let kvLangStatusBar: StatusBarItem;
 let kvLangPythonPath: string; // Last path which was used to activate Language server
 
-function createLanguageClient(command: string, serverArgs: string[]): LanguageClient {
+function createLanguageClient(command: string, serverPath: string): LanguageClient {
 	const serverOptions: ServerOptions = {
-		run : { command: command, args: serverArgs },
-		debug: { command: command, args: serverArgs }
+		run : { command: command, args: [serverPath] },
+		debug: { command: command, args: [serverPath, 'DEBUG_MODE'] }
 	};
 	const clientOptions: LanguageClientOptions = {
 		documentSelector: [{scheme: 'file', language: 'kv'},
@@ -28,7 +28,7 @@ function createLanguageClient(command: string, serverArgs: string[]): LanguageCl
 export function activate(context: ExtensionContext) {
 	serverPath = context.asAbsolutePath(path.join('server', 'server.py'));
 	kvLangPythonPath = getPythonPath();
-	languageClient = createLanguageClient(kvLangPythonPath, [serverPath]);
+	languageClient = createLanguageClient(kvLangPythonPath, serverPath);
 	languageClient.start();
 
 	const myCommandId = 'KvLang.showPythonPathSelection';
@@ -65,7 +65,7 @@ function restartLanguageServer(): void {
 
 		// Start new language client with new path
 		kvLangPythonPath = pythonPath;
-		languageClient = createLanguageClient(pythonPath, [serverPath]);
+		languageClient = createLanguageClient(pythonPath, serverPath);
 		languageClient.start();
 	}
 }

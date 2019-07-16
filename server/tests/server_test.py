@@ -28,6 +28,8 @@ class ServerTest(unittest.TestCase):
         server = KvLangServer(self.stdin, self.stdout)
         server_exit_code = server.run()
         self.assertEqual(server_exit_code, KvLangServer.EXIT_SUCCESS)
+        is_file = os.path.isfile(server.logger.file_name)
+        self.assertFalse(is_file, "Logger file should not exist")
 
     def test_diagnostic(self):
         """Test check basic diagnostic flow of the specific notification.
@@ -92,3 +94,14 @@ class ServerTest(unittest.TestCase):
         content = "".join(results.readlines())
         results.close()
         self.assertNotEqual(content.find("KvLint was not able import kivy module."), -1)
+
+    def test_server_logger(self):
+        """Test check basic logger functionality."""
+        server = KvLangServer(self.stdin, self.stdout)
+        server.logger.enable_debug_mode(["DEBUG_MODE"])
+        server_exit_code = server.run()
+        self.assertEqual(server_exit_code, KvLangServer.EXIT_SUCCESS)
+        is_file = os.path.isfile(server.logger.file_name)
+        self.assertTrue(is_file, "Logger file should exist")
+        if is_file:
+            os.remove(server.logger.file_name)

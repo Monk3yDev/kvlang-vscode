@@ -5,5 +5,6 @@ from kvls.kvlangserver import KvLangServer
 
 if __name__ == "__main__":
     SERVER = KvLangServer(sys.stdin, sys.stdout)
+    SERVER.logger.enable_debug_mode(sys.argv)
     SERVER_EXIT_CODE = SERVER.run()
     sys.exit(SERVER_EXIT_CODE)

@@ -24,3 +24,6 @@ client/out/**
 
 # Output file from the test
 server/tests/stdout.txt
+
+# Debug files
+*.log

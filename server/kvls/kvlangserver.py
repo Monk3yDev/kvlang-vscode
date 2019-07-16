@@ -12,9 +12,6 @@ from kvls.kvlint import KvLint
 from kvls.document import TextDocumentItem, TextDocumentManager
 from kvls.logger import Logger
 
-# Disable logger in released code.
-Logger.DISABLED = True
-
 class KvLangServer(object):
     """Class responsible for managing Language Server Procedures."""
 
@@ -26,7 +23,7 @@ class KvLangServer(object):
 
     def __init__(self, stdin, stdout):
         """Initialize KvLang server."""
-        self.logger = Logger("KvLangLogs")
+        self.logger = Logger("KvLangDebug")
         self.reader = stdin
         self.writer = stdout
         self.server_status = self.OFF_LINE
@@ -45,10 +42,9 @@ class KvLangServer(object):
 
     def send(self, response):
         """Send message to the client."""
-        result = response.build()
-        self.writer.write(result)
+        self.logger.log_message(response)
+        self.writer.write(response.build())
         self.writer.flush()
-        self.logger.log(Logger.INFO, result)
 
     def handle(self, content):
         """Start hadling input from stdin."""
@@ -60,9 +56,8 @@ class KvLangServer(object):
             # Read also new line
             self.reader.readline()
         request.content(self.reader.read(request.length))
-        # Message is rebuild again for logger only.
-        # Remove it will not cause any problems
-        self.logger.log(Logger.INFO, request.build())
+        # Log received message when DEBUG_MODE is enabled
+        self.logger.log_message(request)
         # Start handling requested method from client
         # Message is ready to use
         self.procedures.get(request.method, self.default)(request)

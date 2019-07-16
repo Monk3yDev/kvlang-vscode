@@ -65,7 +65,7 @@ class KvLangServer(object):
         self.logger.log(Logger.INFO, request.build())
         # Start handling requested method from client
         # Message is ready to use
-        self.procedures.get(request.method(), self.default)(request)
+        self.procedures.get(request.method, self.default)(request)
 
     def run(self):
         """Start server for processing input from stdin."""
@@ -88,7 +88,7 @@ class KvLangServer(object):
                                                                 'willSaveWaitUntil': False,
                                                                 'save': {'includeText': True}},
                                            #TODO 'completionProvider': {'resolveProvider': True}
-                                          }}, True, request.request_id())
+                                          }}, True, request.request_id)
         self.send(response)
 
     def initialized(self, _):
@@ -101,8 +101,8 @@ class KvLangServer(object):
 
     def did_save(self, request):
         """Handle DidSaveTextDocument Notification."""
-        document = self.document_manager.get(request.params()["textDocument"]["uri"])
-        document.text = request.params()["text"]
+        document = self.document_manager.get(request.params["textDocument"]["uri"])
+        document.text = request.params["text"]
         diagnostic = self.kvlint.parse(document)
         notification = NotificationMessage()
         notification.content({'uri': document.uri,
@@ -115,9 +115,9 @@ class KvLangServer(object):
 
     def did_open(self, request):
         """Handle DidOpenTextDocumentParams Notification."""
-        document = TextDocumentItem(request.params()["textDocument"]["uri"],
-                                    request.params()["textDocument"]["languageId"],
-                                    request.params()["textDocument"]["text"])
+        document = TextDocumentItem(request.params["textDocument"]["uri"],
+                                    request.params["textDocument"]["languageId"],
+                                    request.params["textDocument"]["text"])
         self.document_manager.add(document)
         diagnostic = self.kvlint.parse(document)
         notification = NotificationMessage()
@@ -128,9 +128,9 @@ class KvLangServer(object):
     def did_close(self, request):
         """Handle DidCloseTextDocumentParams Notification."""
         # Clear diagnostic
-        self.document_manager.remove(request.params()["textDocument"]["uri"])
+        self.document_manager.remove(request.params["textDocument"]["uri"])
         notification = NotificationMessage()
-        notification.content({'uri': request.params()["textDocument"]["uri"],
+        notification.content({'uri': request.params["textDocument"]["uri"],
                               'diagnostics': []}, 'textDocument/publishDiagnostics')
         self.send(notification)
 
@@ -138,31 +138,31 @@ class KvLangServer(object):
         """Handle CompletionParams Request."""
         # TODO Add full support for textDocument/completion with test
         response = ResponseMessage()
-        response.content({'isIncomplete': False, 'items': []}, True, request.request_id())
+        response.content({'isIncomplete': False, 'items': []}, True, request.request_id)
         self.send(response)
 
     def resolve(self, request):
         """Handle CompletionItem Request."""
         # TODO Add full support for completionItem/resolve with test
         response = ResponseMessage()
-        response.content({'isIncomplete': False, 'items': []}, True, request.request_id())
+        response.content({'isIncomplete': False, 'items': []}, True, request.request_id)
         self.send(response)
 
     def default(self, request):
         """Handle unknown method which do not exist in procedures."""
         self.logger.log(Logger.INFO, "Server do not support request with method='{}'". \
-                        format(request.method()))
+                        format(request.method))
         # Ignore Notification message
         if request.is_notification() is False:
             response = ResponseMessage()
             response.content({'code': ErrorCodes.METHOD_NOT_FOUND, 'message': 'Method not found'},
-                             False, request.request_id())
+                             False, request.request_id)
             self.send(response)
 
     def shutdown(self, request):
         """Handle Shutdown Request."""
         response = ResponseMessage()
-        response.content({}, True, request.request_id())
+        response.content({}, True, request.request_id)
         self.server_status = self.SHUTDOWN
         self.send(response)
 

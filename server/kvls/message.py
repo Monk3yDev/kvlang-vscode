@@ -69,18 +69,22 @@ class RequestMessage(Message):
         return self.message.get("id", None) is None
 
     # Parsing is successful. Current method can be used
+    @property
     def request_id(self):
         """Return id of the request."""
         return self.message["id"]
 
+    @property
     def method(self):
         """Return method name."""
         return self.message["method"]
 
+    @property
     def jsonrpc(self):
         """Return jsonrpc version."""
         return self.message["jsonrpc"]
 
+    @property
     def params(self):
         """Return params included in request."""
         return self.message["params"]

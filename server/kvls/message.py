@@ -8,86 +8,120 @@ import re
 import json
 from kvls.utils import EOL_LSP, CHARSET
 
+class MessageUtils(object):
+    """Helper class for processing message information."""
+
+    @staticmethod
+    def fetch_content_length(line):
+        """Fetch content length from the header."""
+        match = re.match('Content-Length: ([0-9]*)', line)
+        return int(match.group(1))
+
+    @staticmethod
+    def fetch_charset(line):
+        """Fetch charset from the content type header."""
+        match = re.match('Content-Type: .*charset=(.*)', line)
+        if match is not None:
+            return match.group(1)
+        return None
+
+    @staticmethod
+    def parse_content(content, charset):
+        """Parse JSON content to the dictionary using specific charset."""
+        return json.loads(content, encoding=charset)
+
+    @staticmethod
+    def is_notification(content):
+        """Check is message from client is notification."""
+        return content.get("id", None) is None
+
 class Message(object):
     """Base class of the language server protocol specification."""
 
     def __init__(self):
         """Initialize base message object."""
-        self.length = 0
-        self.message = None
-        self.encoding = CHARSET
-
-    def build(self):
-        """Build and return full content of the message."""
-        return 'Content-Length: {}{}Content-Type: ' \
-               'application/vscode-jsonrpc; charset={}{}{}{}'. \
-               format(self.length, EOL_LSP, self.encoding, EOL_LSP, EOL_LSP, self.message)
-
-class NotificationMessage(Message):
-    """Class responsible for parsing and storing information of the notification message."""
-
-    def content(self, content, method):
-        """Parse content of the message from dictionary to json format."""
-        self.message = json.dumps({"jsonrpc": "2.0", "method": method, "params": content},
-                                  separators=(',', ':'))
-        self.length = len(self.message)
-
-class ResponseMessage(Message):
-    """Class responsible for parsing and storing information of the response message."""
-
-    def content(self, content, success, request_id):
-        """Parse content of the message from dictionary to json format."""
-        message_content = {}
-        if success:
-            message_content = {"jsonrpc": "2.0", "id": request_id, "result": content}
-        else:
-            message_content = {"jsonrpc": "2.0", "id": request_id, "error": content}
-        self.message = json.dumps(message_content, separators=(',', ':'))
-        self.length = len(self.message)
-
-class RequestMessage(Message):
-    """Class responsible for parsing and storing information of the request/notification."""
-
-    def content_length(self, line):
-        """Parse Content length header."""
-        match = re.match('Content-Length: ([0-9]*)', line)
-        self.length = int(match.group(1))
-
-    def content_type(self, line):
-        """Parse content type header."""
-        match = re.match('Content-Type: .*charset=(.*)', line)
-        if match is not None:
-            self.encoding = match.group(1)
-        return match
-
-    def content(self, content):
-        """Parse content of the message from json to dictionary format."""
-        self.message = json.loads(content, encoding=self.encoding)
-
-    def is_notification(self):
-        """Check is request message is notification."""
-        return self.message.get("id", None) is None
-
-    # Parsing is successful. Current method can be used
-    @property
-    def request_id(self):
-        """Return id of the request."""
-        return self.message["id"]
-
-    @property
-    def method(self):
-        """Return method name."""
-        return self.message["method"]
+        self.message_content = dict()
 
     @property
     def jsonrpc(self):
         """Return jsonrpc version."""
-        return self.message["jsonrpc"]
+        return self.message_content["jsonrpc"]
+
+    def build(self):
+        """Build and return full content of the message."""
+        message_content = json.dumps(self.message_content, separators=(',', ':'))
+        length = len(message_content)
+        return 'Content-Length: {}{}Content-Type: ' \
+               'application/vscode-jsonrpc; charset={}{}{}{}'. \
+               format(length, EOL_LSP, CHARSET, EOL_LSP, EOL_LSP, message_content)
+
+class NotificationMessage(Message):
+    """Class responsible storing notification message information."""
+
+    def content(self, content, method):
+        """Assign content and method to the message."""
+        self.message_content = {"jsonrpc": "2.0", "method": method, "params": content}
+
+    def assign_message_content(self, dict_content):
+        """Full dictionary content of the message which will be assigned to notification."""
+        self.message_content = dict_content
+
+    @property
+    def method(self):
+        """Return method name."""
+        return self.message_content["method"]
+
+    @property
+    def params(self):
+        """Return params included in notification."""
+        return self.message_content["params"]
+
+class ResponseMessage(Message):
+    """Class responsible storing response message information."""
+
+    def content(self, content, success, request_id):
+        """Assign content, request ID, result or error message depends on the success."""
+        if success:
+            self.message_content = {"jsonrpc": "2.0", "id": request_id, "result": content}
+        else:
+            self.message_content = {"jsonrpc": "2.0", "id": request_id, "error": content}
+
+    @property
+    def request_id(self):
+        """Return id of the request."""
+        return self.message_content["id"]
+
+    @property
+    def result(self):
+        """Return result included in response."""
+        return self.message_content["result"]
+
+    @property
+    def error(self):
+        """Return error included in response."""
+        return self.message_content["error"]
+
+class RequestMessage(Message):
+    """Class responsible storing request message information."""
+
+    def assign_message_content(self, dict_content):
+        """Full dictionary content of the message which will be assigned to request."""
+        self.message_content = dict_content
+
+    @property
+    def request_id(self):
+        """Return id of the request."""
+        return self.message_content["id"]
+
+    @property
+    def method(self):
+        """Return method name."""
+        return self.message_content["method"]
 
     @property
     def params(self):
         """Return params included in request."""
-        return self.message["params"]
+        return self.message_content["params"]
 
 class ErrorCodes(object):
     """The error constants in case a request fails."""

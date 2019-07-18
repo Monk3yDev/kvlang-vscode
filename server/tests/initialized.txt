@@ -2,10 +2,10 @@ Content-Length: 66
 Content-Type: application/vscode-jsonrpc; charset=utf-8
 
 {"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}}
-Content-Length: 67
+Content-Length: 58
 Content-Type: application/vscode-jsonrpc; charset=utf-8
 
-{"jsonrpc": "2.0", "id": 0, "method": "initialized", "params": {}}
+{"jsonrpc": "2.0", "method": "initialized", "params": {}}
 Content-Length: 66
 Content-Type: application/vscode-jsonrpc; charset=utf-8
 

@@ -2,8 +2,11 @@ Content-Length: 66
 Content-Type: application/vscode-jsonrpc; charset=utf-8
 
 {"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}}
-Content-Length: 164
+Content-Length: 58
 Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc": "2.0", "method": "initialized", "params": {}}
+Content-Length: 164
 
 {"jsonrpc": "2.0", "method": "textDocument/didOpen", "params": {"textDocument": {"uri": "kivy.kv", "languageId": "kv", "version": 1, "text": "<AnchorLayout>: a"}}}
 Content-Length: 140

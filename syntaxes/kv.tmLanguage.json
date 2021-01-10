@@ -27,7 +27,11 @@
 		},
 		{
 			"name": "entity.name.tag.kv",
-			"match": "\\b(True|None|False|self|app|root|nonlocal|is|lambda|and|not|or|in)\\b"
+			"match": "\\b(self|app|root|nonlocal|is|lambda|and|not|or|in)\\b"
+		},
+		{
+			"name": "constant.language.kv",
+			"match": "\\b(True|False|None)\\b"
 		},
 		{
 			"explanation": "A KvLang syntax of special key word attributes",

@@ -100,7 +100,16 @@ function updatePythonPath(): void {
 
 function getPythonPath(): string {
 	const configuration = workspace.getConfiguration('kvlang', null);
-	let pythonPath = configuration.get('pythonPath', undefined);
+	let pythonPath: any;
+	let useDefaultPythonPath = configuration.get('useDefaultPythonPath', false);
+
+	// If 'useDefaultPythonPath' is set, try to get the config from python.pythonPath first
+	if (useDefaultPythonPath) {
+		let defaultPythonPath = workspace.getConfiguration('python', null).get('pythonPath', undefined);
+		pythonPath = defaultPythonPath || (configuration.get('pythonPath', undefined));
+	} else {
+		pythonPath = configuration.get('pythonPath', undefined);
+	}
 
 	if (pythonPath === undefined) {
 		console.error('KvLang: PythonPath is undefined. Assigned default value of python path')

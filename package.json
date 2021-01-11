@@ -39,6 +39,12 @@
                     "type": "string",
                     "default": "python",
                     "description": "Python path which will be used by KvLang Language Server."
+                },
+                "kvlang.useDefaultPythonPath": {
+                    "scope": "resource",
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "If enabled, the KvLang Language Server will use the python path specified by `python.pythonPath` (The Python path specified in the Python extension)"
                 }
             }
         },

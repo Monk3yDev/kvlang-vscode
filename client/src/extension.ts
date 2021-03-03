@@ -75,6 +75,10 @@ function updatePythonPath(): void {
 	                        Empty input will clear current configuration.',
 	               placeHolder: 'current: ' + getPythonPath()};
     window.showInputBox(options).then(input => {
+		// User does not confirm changes with ENTER
+        if (input === undefined) {
+			return
+		}
 
 		input = input.trim();
 		let pythonPath: string;

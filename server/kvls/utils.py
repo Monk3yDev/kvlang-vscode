@@ -11,3 +11,6 @@ EOL_LSP_WIN = '\n'
 EOL_LSP = EOL_LSP_WIN if os.name != "posix" else EOL_LSP_POSIX
 
 CHARSET = "utf-8"
+
+class CharsetException(Exception):
+    """Custom class for throwing charset exception"""

@@ -26,9 +26,9 @@ class MessageUtils(object):
         return None
 
     @staticmethod
-    def parse_content(content, charset):
-        """Parse JSON content to the dictionary using specific charset."""
-        return json.loads(content, encoding=charset)
+    def parse_content(content):
+        """Parse JSON content to the dictionary."""
+        return json.loads(content)
 
     @staticmethod
     def is_notification(content):

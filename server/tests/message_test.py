@@ -16,11 +16,11 @@ class MessageTest(unittest.TestCase):
         self.assertEqual(None, MessageUtils.fetch_charset(""))
 
         notification = MessageUtils.parse_content('{"jsonrpc":"2.0","method":'\
-                                                  '"initialized","params":{}}', "utf-8")
+                                                  '"initialized","params":{}}')
         self.assertEqual(MessageUtils.is_notification(notification), True)
 
         request = MessageUtils.parse_content('{"jsonrpc":"2.0","id":0,"method":'\
-                                             '"initialize","params":{}}', "utf-8")
+                                             '"initialize","params":{}}')
         self.assertEqual(MessageUtils.is_notification(request), False)
 
     def test_message_base_class(self):

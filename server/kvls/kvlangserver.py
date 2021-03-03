@@ -11,7 +11,7 @@ from kvls.message import RequestMessage, ResponseMessage, NotificationMessage, E
 from kvls.kvlint import KvLint
 from kvls.document import TextDocumentItem, TextDocumentManager
 from kvls.logger import Logger
-from kvls.utils import CHARSET
+from kvls.utils import CHARSET, CharsetException
 
 class KvLangServer(object):
     """Class responsible for managing Language Server Procedures."""
@@ -55,12 +55,12 @@ class KvLangServer(object):
         charset = MessageUtils.fetch_charset(content_type_or_eol)
         if charset:
             # Read also new line because charset was found in header
-            # TODO Server should response with error when charset is different than utf-8
+            if charset != CHARSET:
+                raise CharsetException("KvLang support only utf-8 encoding. "
+                                       "Content-Type encoding: {}".format(charset))
             self.reader.readline()
-        else:
-            # Set default utf-8 charset of language server protocol
-            charset = CHARSET
-        message_content = MessageUtils.parse_content(self.reader.read(content_length), charset)
+
+        message_content = MessageUtils.parse_content(self.reader.read(content_length))
         if MessageUtils.is_notification(message_content):
             notification = NotificationMessage()
             notification.assign_message_content(message_content)

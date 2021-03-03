@@ -5,7 +5,7 @@ import os
 # Disable UnitTest.
 os.environ["KIVY_UNITTEST"] = "0"
 from kvls.kvlangserver import KvLangServer # pylint: disable=C0413
-
+from kvls.utils import CharsetException
 
 class ServerTest(unittest.TestCase):
     """Server tests."""
@@ -16,6 +16,7 @@ class ServerTest(unittest.TestCase):
         self.diagnostic = open('./server/tests/diagnostic.txt', mode='r')
         self.unknown = open('./server/tests/unknown.txt', mode='r')
         self.stdout = open('./server/tests/stdout.txt', mode='w')
+        self.charset = open('./server/tests/initialized_unsupported_charset.txt', mode='r')
 
     def tearDown(self):
         """Cleanup of the tests."""
@@ -30,6 +31,12 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(server_exit_code, KvLangServer.EXIT_SUCCESS)
         is_file = os.path.isfile(server.logger.file_name)
         self.assertFalse(is_file, "Logger file should not exist")
+
+    def test_unsupported_charset(self):
+        """Test check assertion for unsupported charset by language server."""
+        with self.assertRaises(CharsetException):
+            server = KvLangServer(self.charset, self.stdout)
+            server.run()
 
     def test_diagnostic(self):
         """Test check basic diagnostic flow of the specific notification.

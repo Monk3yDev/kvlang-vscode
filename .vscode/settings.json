@@ -24,7 +24,6 @@
         "typescriptreact",
         "yml"
     ],
-    "python.pythonPath": "python",
     "python.testing.nosetestsEnabled": true,
     "python.testing.nosetestArgs": [
         "./server", "--with-coverage", "--cover-erase", "--cover-html", "--cover-package=server"

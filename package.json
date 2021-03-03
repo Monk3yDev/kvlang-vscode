@@ -2,7 +2,7 @@
     "name": "kvlang",
     "displayName": "KvLang",
     "description": "Support for the KvLang language of Kivy: Cross-platform Python Framework for NUI Development",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "Monk3yDev",
     "license": "MIT",
     "engines": {

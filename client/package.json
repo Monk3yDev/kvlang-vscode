@@ -3,7 +3,7 @@
     "description": "VSCode extension for running kvlang language server",
     "author": "Monk3yDev",
     "license": "MIT",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "Monk3yDev",
     "engines": {
         "vscode": "^1.34.0"
